@@ -9,7 +9,7 @@ include('../dbconfig.php');
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Products</title>
+    <title>Manage Goods and Crops</title>
 
 
     <!-- Bootstrap core CSS -->
@@ -57,11 +57,11 @@ include('../dbconfig.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Inventory</h1>
+        <h1 class="h2">Goods and Crops</h1>
         
       </div>
 
-      <h2>List of Item Product</h2>
+      <h2>List of Goods and Crops</h2>
       <div class="table-responsive">
          <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#product_modal">Add</button>
          <br><br>
@@ -74,6 +74,7 @@ include('../dbconfig.php');
               <th>Price</th>
               <th>Weight</th>
               <th>Season</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -94,10 +95,137 @@ include('../dbconfig.php');
         </button>
       </div>
       <div class="modal-body" id="product_modal_content">
-    
+      <form method="post" id="product_form" enctype="multipart/form-data">
+            
+             <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="prod_img">
+                 <img src="../img/uploads/blank.png" class="rounded float-left" alt="..." id="prod_img_container" runat="server" >
+              </label>
+              <input type="file" class="form-control-file" id="prod_img" name="prod_img">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="prod_weight">Available:(<i id="prod_weight"></i>)</label>
+                  
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="prod_name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control" id="prod_name" name="prod_name">
+              </div>
+              <div class="form-group">
+        <label for="prod_category">Category</label>
+        <select class="form-control" id="prod_category" name="prod_category">
+          <?php 
+          $sql = "SELECT * FROM `category`";
+
+          $result = mysqli_query($conn, $sql);
+          while ($row = mysqli_fetch_array($result)) {
+          ?>
+          <option value="<?php echo $row["ctgy_ID"];?>"><?php echo $row["ctgy_Name"];?></option>
+          <?php
+          }
+          ?>
+        </select>
+      </div>
+              <div class="form-group">
+                <label for="prod_descr" class="col-form-label">Description:</label>
+                <textarea class="form-control" id="prod_descr"  name="prod_descr"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="prod_sciname">Scientific Name</label>
+                  <input type="text" class="form-control" id="prod_sciname" name="prod_sciname" placeholder="" value="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="prod_engname">English Name</label>
+                  <input type="text" class="form-control" id="prod_engname" name="prod_engname" placeholder="" value="">
+                </div>
+              </div>
+               <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="prod_price">Price:</label>
+                  <input type="text" class="form-control " aria-label="Amount (to the nearest dollar)" id="prod_price" name="prod_price" value="0"  pattern="\d*" maxlength="6" >
+                </div>
+               <!--  <div class="form-group col-md-6">
+                  <label for="prod_qnty">Weight (KG)</label>
+                  <input type="text" class="form-control " aria-label="Amount (to the nearest dollar)" id="prod_qnty" id="prod_qnty" value="0"  pattern="\d*" maxlength="6" >
+                </div> -->
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="prod_season">Season:</label>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="prod_season_start">Start:</label>
+                  <select class="form-control" id="prod_season_start" name="prod_season_start">
+                    <option value='1'>January</option>
+                    <option value='2'>February</option>
+                    <option value='3'>March</option>
+                    <option value='4'>April</option>
+                    <option value='5'>May</option>
+                    <option value='6'>June</option>
+                    <option value='7'>July</option>
+                    <option value='8'>August</option>
+                    <option value='9'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                  </select>
+                 
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="prod_season_end">End:</label>
+                  <select class="form-control" id="prod_season_end" name="prod_season_end">
+                    <option value='1'>January</option>
+                    <option value='2'>February</option>
+                    <option value='3'>March</option>
+                    <option value='4'>April</option>
+                    <option value='5'>May</option>
+                    <option value='6'>June</option>
+                    <option value='7'>July</option>
+                    <option value='8'>August</option>
+                    <option value='9'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                  </select>
+                </div>
+              </div>
+        
+           
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="submit" value="submit_product">Submit</button>
+        <input type="hidden" name="product_ID" id="product_ID" />
+        <input type="hidden" name="operation" id="operation" />
+        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_product">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+       </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="delproduct_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="product_modal_title">Delete this Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" id="product_delform"  enctype="multipart/form-data">
+        <div class="text-center">
+        <div class="btn-group">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -117,6 +245,24 @@ include('../dbconfig.php');
         <script src="../js/dashboard.js"></script>
         <script type="text/javascript" src="../datatables/datatables.min.js"></script>
         <script type="text/javascript">
+            function readURL(input) {
+        
+                  if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                
+                    reader.onload = function(e) {
+                      $('#prod_img_container').attr('src', e.target.result);
+                    }
+                
+                    reader.readAsDataURL(input.files[0]);
+                  }
+                }
+                
+                $("#prod_img").change(function() {
+                  readURL(this);
+                });
+
+
           $(document).ready(function() {
              
             var dataTable = $('#product_data').DataTable({
@@ -136,86 +282,156 @@ include('../dbconfig.php');
 
           });
 
-          $(document).on('click', '.add', function(){
-              $('#product_modal_title').text('Add New Product');
-             $('#product_modal_content').html('');
-                $.ajax({
-                type        :   'POST',
-                url         :   "datatable/products/modal.php",
-                data        :   {action:"product_add"},
-                dataType    :   'html',
-                complete    :   function(data) {
-                  $('#product_modal_content').html(data.responseText);
-                    }
-                });
-                $('#submit').show();
-                 $('#submit').text('Submit');
-                 $('#submit').val('submit_product');
-                 
-            
+          $(document).on('submit', '#product_form', function(event){
+            event.preventDefault();
+           var prod_img = $('prod_img').val();
+           var prod_name = $('prod_name').val();
+           var prod_category = $('prod_category').val();
+           var prod_descr = $('prod_descr').val();
+           var prod_sciname = $('prod_sciname').val();
+           var prod_engname = $('prod_engname').val();
+           var prod_price = $('prod_price').val();
+           var prod_qnty = $('prod_qnty').val();
+           var prod_season_start = $('prod_season_start').val();
+           var prod_season_end = $('prod_season_end').val();
 
+           $('#operation').val("submit_product");
+  
+            var extension = $('#prod_img').val().split('.').pop().toLowerCase();
+            if(extension != '')
+            {
+              if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1)
+              {
+                alert("Invalid Image File");
+                $('#prod_img').val('');
+                return false;
+              }
+            } 
+         
+              $.ajax({
+                url:"datatable/products/insert.php",
+                method:'POST',
+                data:new FormData(this),
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  alert(data);
+                  $('#product_form')[0].reset();
+                  $('#product_modal').modal('hide');
+                  dataTable.ajax.reload();
+                }
+              });
+           
+          });
+
+          $(document).on('click', '.add', function(){
+            $('#product_modal_title').text('Add New Product');
+            $('#product_form')[0].reset();
+            $('#prod_img_container').attr('src', '../img/uploads/blank.png');
+           
+            $('#submit_input').show();
+            $('#submit_input').text('Submit');
+            $('#submit_input').val('submit_product');
+            $('#operation').val("submit_product");
+            
            
           });
 
           $(document).on('click', '.view', function(){
             var product_ID = $(this).attr("id");
             $('#product_modal_title').text('View Product');
-            $('#product_modal_content').html('');
-            $.ajax({
-            type        :   'POST',
-            url:"datatable/products/modal.php",
-            data        :   {action:"product_view",product_ID:product_ID},
-            dataType    :   'html',
-            complete     :   function(data) {
-              $('#product_modal_content').html(data.responseText);
-                }
-            });
-                $('#submit').show();
-                 $('#submit').text('Update');
-                 $('#submit').val('submit_upproduct');
+            $('#product_modal').modal('show');
 
-            });
-
-           $(document).on('click', '.edit', function(){
-            var product_ID = $(this).attr("id");
-             $('#product_modal_title').text('Edit this Product');
-             $('#product_modal_content').html('');
              $.ajax({
-            type        :   'POST',
-            url:"datatable/products/modal.php",
-            data        :   {action:"product_edit",product_ID:product_ID},
-            dataType    :   'html',
-            complete     :   function(data) {
-              $('#product_modal_content').html(data.responseText);
+                url:"datatable/products/fetch_single.php",
+                method:'POST',
+                data:{action:"product_view",product_ID:product_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+                  $('#prod_img_container').attr('src', data.prod_Img);
+                  $('#prod_name').val(data.prod_Name);
+                  $('#prod_category').val(data.ctgy_ID).change();
+                  $('#prod_descr').val(data.prod_Description);
+                  $('#prod_sciname').val(data.prod_ScientificName);
+                  $('#prod_engname').val(data.prod_EnglishName);
+                  $('#prod_price').val(data.prod_Price);
+                  $('#prod_weight').text(data.prod_Weight);
+                  $('#prod_season_start').val(data.prod_SeasonStart).change();
+                  $('#prod_season_end').val(data.prod_SeasonEnd).change();
+                  $('#submit_input').hide();
+                  $('#product_ID').val(product_ID);
+                  $('#operation').val("Edit");
+                  
                 }
+              });
+
+
             });
-            
+            $(document).on('click', '.edit', function(){
+            var product_ID = $(this).attr("id");
+            $('#product_modal_title').text('View Product');
+            $('#product_modal').modal('show');
+
+             $.ajax({
+                url:"datatable/products/fetch_single.php",
+                method:'POST',
+                data:{action:"product_view",product_ID:product_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+                  $('#prod_img_container').attr('src', data.prod_Img);
+                     $('#prod_name').val(data.prod_Name);
+                  $('#prod_category').val(data.ctgy_ID).change();
+                  $('#prod_descr').val(data.prod_Description);
+                  $('#prod_sciname').val(data.prod_ScientificName);
+                  $('#prod_engname').val(data.prod_EnglishName);
+                  $('#prod_price').val(data.prod_Price);
+                  $('#prod_weight').text(data.prod_Weight);
+                  $('#prod_season_start').val(data.prod_SeasonStart).change();
+                  $('#prod_season_end').val(data.prod_SeasonEnd).change();
+                  $('#submit_input').show();
+                  $('#submit_input').text('Update');
+                  $('#submit_input').val('submit_upproduct');
+                  $('#product_ID').val(product_ID);
+                  $('#operation').val("Edit");
+                  
+                }
+              });
+
+
             });
             $(document).on('click', '.delete', function(){
-               var product_ID = $(this).attr("id");
-            $('#product_modal_title').text('Delete this Product');
-            $('#product_modal_content').html('');
-            $.ajax({
-            type        :   'POST',
-            url:"datatable/products/modal.php",
-            data        :   {action:"product_delete",product_ID:product_ID},
-            dataType    :   'html',
-            complete     :   function(data) {
-              $('#product_modal_content').html(data.responseText);
-                }
-            });
-            
-            $('#submit').hide();
+            var product_ID = $(this).attr("id");
+             $('#delproduct_modal').modal('show');
+              $('.submit').hide();
+             
+             // $('#product_ID').val(product_ID);
             });
 
-              $(document).on('click', '#submit', function(){
-             
-              // alert('asdasd');
-             
-                  $('#product_modal').modal('hide');
-              
-            
-            });
+           
+
+
+          $(document).on('submit', '#product_delform', function(event){
+            event.preventDefault();
+             var product_ID =  $('#product_ID').val();
+             $.ajax({
+                url:"datatable/products/insert.php",
+                method:'POST',
+                data:{operation:"delete_product",product_ID:product_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+                  alert(data);
+                  $('#delproduct_modal').modal('hide');
+                  dataTable.ajax.reload();
+                  
+                }
+              });
+           
+          });
+          
           } );
 
 
