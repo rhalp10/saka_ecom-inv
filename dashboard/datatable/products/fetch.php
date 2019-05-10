@@ -49,10 +49,10 @@ foreach($result as $row)
     Action
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item view" href="#" id="'.$row["prod_ID"].'">View</a>
-    <a class="dropdown-item edit" href="#" id="'.$row["prod_ID"].'">Edit</a>
+    <a class="dropdown-item view"  data-toggle="modal" data-target="#product_modal" id="'.$row["prod_ID"].'">View</a>
+    <a class="dropdown-item edit"  data-toggle="modal" data-target="#product_modal" id="'.$row["prod_ID"].'">Edit</a>
      <div class="dropdown-divider"></div>
-    <a class="dropdown-item delete" href="#" id="'.$row["prod_ID"].'">Delete</a>
+    <a class="dropdown-item delete"  data-toggle="modal" data-target="#product_modal" id="'.$row["prod_ID"].'">Delete</a>
   </div>
 </div>';
 

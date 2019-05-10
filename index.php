@@ -95,8 +95,8 @@
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h2 class="featurette-heading">Who we are</h2>
+        <p class="lead">Farmers Training Center and Technology Demonstration Farm (FTC-TDF) also known as SAKA-Sanayan sa Kakayahang Agrikultura is located inside Cavite State University (Main Campus) . In 1983, the SAKA started their project. They grow multiple variety of more than 30 types of goods and crops throughout their growing season which is year round. Their vegetables are enjoyed by many Indangeños because its regular buyer are the vendors and people of Indang. Now, this year the Farmers Training Center and Technology Demonstration Farm is ready to improve their system and technology to expand their potential market.</p>
       </div>
       <div class="col-md-5">
         <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
@@ -107,8 +107,8 @@
 
     <div class="row featurette">
       <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h2 class="featurette-heading">Our Commitment. . .</h2>
+        <p class="lead">The Unversity Extension Services, through the Farmers Training Center and Technology Demonstration Farm, is commited "to help rural and urban dwellers and other clientele in acquiring new knowledge and skills in line with their interest and needs geared towards increasing income and consequently, improving their standard of living."</p>
       </div>
       <div class="col-md-5 order-md-1">
         <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>

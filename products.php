@@ -46,7 +46,12 @@ include('dbconfig.php');
         while ($row = mysqli_fetch_array($result)) {
         $prod_ID = $row['prod_ID'];
         $prod_Name = $row['prod_Name'];
-     
+      if (!empty($row['prod_Img'])) {
+         $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
+        }
+        else{
+          $prod_Img = "img/uploads/blank.png";
+        }
         
         if (isset($row['prod_ScientificName'])) {
            $prod_scientific_name= 'Scientific Name: '.$row['prod_ScientificName'];
@@ -71,7 +76,7 @@ include('dbconfig.php');
 
           <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img  class="bd-placeholder-img card-img-top" src="img/uploads/rambutan.png" width="100%" height="100%">
+            <img  class="bd-placeholder-img card-img-top" src="<?php echo $prod_Img?>" width="100%" height="100%" style="height: 348px;">
             <div class="card-body">
               <p class="card-text">
                 <h3><?php echo $prod_Name?></h3>
