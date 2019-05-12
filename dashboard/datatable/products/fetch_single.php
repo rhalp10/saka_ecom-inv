@@ -15,7 +15,7 @@ if (isset($_POST['action'])) {
 		foreach($result as $row)
 		{			
 		
-			$output["prod_Name"] = $row["prod_Name"];
+			
 			if (!empty($row['prod_Img'])) {
 				
 			 $output["prod_Img"] = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);

@@ -36,7 +36,6 @@ else{
     <meta name="generator" content="Jekyll v3.8.5">
     <title><?php echo $page_title;?></title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/floating-labels/">
     <link rel="icon" href="img/logo.png" type="image/x-icon">
     <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">

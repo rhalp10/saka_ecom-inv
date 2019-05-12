@@ -9,6 +9,45 @@ include('dbconfig.php');
   <body>
  <?php 
  include('x-header.php');
+ function month($date){
+    if($date == '1' ){
+      $var = "January";
+    }
+      if($date == '2' ){
+        $var = "February";
+      }
+      if($date == '3' ){
+        $var = "March";
+      }
+      if($date == '4' ){
+        $var = "April";
+      }
+      if($date == '5' ){
+        $var = "May";
+      }
+      if($date == '6' ){
+        $var = "June";
+      }
+      if($date == '7' ){
+        $var = "July";
+      }
+      if($date == '8' ){
+        $var = "August";
+      }
+      if($date == '9' ){
+        $var = "September";
+      }
+      if($date == '10'){
+        $var = "October";
+      }
+      if($date == '11'){
+        $var = "November";
+      }
+      if($date == '12'){
+        $var = "December";
+      }
+      return $var;
+  }
  ?>
  <style type="text/css">
    #prod_minus:hover{
@@ -34,7 +73,7 @@ include('dbconfig.php');
 
   <div class="album py-5 bg-secondary">
     <div class="container">
-      <?php 
+        <?php 
       $sql = "SELECT * FROM `products` WHERE ctgy_ID = 1";
       $result = mysqli_query($conn, $sql);
       $count_question = mysqli_num_rows($result) ;
@@ -45,13 +84,15 @@ include('dbconfig.php');
          if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_array($result)) {
         $prod_ID = $row['prod_ID'];
-        $prod_Name = $row['prod_Name'];
       if (!empty($row['prod_Img'])) {
-         $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
-        }
-        else{
-          $prod_Img = "img/uploads/blank.png";
-        }
+        
+        $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
+      }
+      else{
+        $prod_Img = "img/uploads/blank.png";
+      }
+        $prod_Name = $row['prod_Name'];
+        $prod_Qnty = $row['prod_Weight'];
         
         if (isset($row['prod_ScientificName'])) {
            $prod_scientific_name= 'Scientific Name: '.$row['prod_ScientificName'];
@@ -60,45 +101,51 @@ include('dbconfig.php');
            $prod_scientific_name= '';
         }
        if (isset($row['prod_EnglishName'])) {
-          $prod_english_name= 'English Name: <i>'.$row['prod_EnglishName'].'<i>';
+          $prod_english_name= 'English Name: <i>'.$row['prod_EnglishName'].'</i>';
         }
         else{
            $prod_english_name= '';
         }
-        if (isset($row['prod_Season'])) {
-             $prod_Season = 'Season: '.$row['prod_Season'];
+        if (isset($row['prod_SeasonStart'])) {
+             $prod_Season = 'Season: '. month($row["prod_SeasonStart"]).' - '.month($row["prod_SeasonEnd"]);
         }
         else{
            $prod_english_name= '';
         }
-        
+        if ($prod_Qnty > 0) {
+          $av = "<label  class='btn btn-success btn-sm float-right'>Available</label>";
+        }
+        else{
+           $av = "<label class='btn btn-danger btn-sm float-right'>Out of Stock</label>";
+        }
          ?>
 
           <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img  class="bd-placeholder-img card-img-top" src="<?php echo $prod_Img?>" width="100%" height="100%" style="height: 348px;">
+            <img  class="bd-placeholder-img card-img-top" src="<?php echo $prod_Img?>" width="100%" height="100%" >
             <div class="card-body">
               <p class="card-text">
-                <h3><?php echo $prod_Name?></h3>
-              <?php echo $prod_scientific_name?>
+              <strong><?php echo $prod_Name?><?php echo $av?></strong>
               <br>
-              <?php echo $prod_english_name?>
+              <?php echo $prod_scientific_name;?>
+              <br>
+              <?php echo $prod_english_name;?>
               </p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Add to Cart</button>
+                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="action">Add to Cart</button>
                 </div>
                 <small class="text-muted"><strong> <?php echo $prod_Season?></strong></small>
               </div>
             </div>
           </div>
         </div>
+   
          <?php
             }
           }
         ?>
-       
       
       </div>
     </div>
@@ -109,147 +156,13 @@ include('dbconfig.php');
     <h1 style="background-color: #693; padding: 5px; color: white; border-radius: 100px 0px 100px 0px;">Open Field Demonstration Project</h1>
   </section>
 
-  <div class="album py-5 bg-warning">
-    <div class="container">
-
-      <div class="row">
-         <?php 
-      $sql = "SELECT * FROM `products` WHERE ctgy_ID = 2";
-      $result = mysqli_query($conn, $sql);
-      $count_question = mysqli_num_rows($result) ;
-     
-      ?>
-      <div class="row">
-        <?php 
-         if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_array($result)) {
-        $prod_Name = $row['prod_Name'];
-        $prod_Qnty = $row['prod_Qnty'];
-     
-        
-        if (isset($row['prod_ScientificName'])) {
-           $prod_scientific_name= 'Scientific Name: '.$row['prod_ScientificName'];
-        }
-        else{
-           $prod_scientific_name= '';
-        }
-       if (isset($row['prod_EnglishName'])) {
-          $prod_english_name= 'English Name: <i>'.$row['prod_EnglishName'].'<i>';
-        }
-        else{
-           $prod_english_name= '';
-        }
-        if (isset($row['prod_Season'])) {
-             $prod_Season = 'Season: '.$row['prod_Season'];
-        }
-        else{
-           $prod_english_name= '';
-        }
-        
-         ?>
-
-          <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img  class="bd-placeholder-img card-img-top" src="img/uploads/rambutan.png" width="100%" height="100%">
-            <div class="card-body">
-              <p class="card-text">
-                <h3><?php echo $prod_Name?>(<?php echo $prod_Qnty?>)</h3>
-              <?php echo $prod_scientific_name?>
-              <br>
-              <?php echo $prod_english_name?>
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#ActionModal"  data-id="V-<?php echo $prod_ID?>" id="action">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Add to Cart</button>
-                </div>
-                <small class="text-muted"><strong> <?php echo $prod_Season?></strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-         <?php
-            }
-          }
-        ?>
-       
-      
-      </div>
-    </div>
-  </div>
 
       <section class="jumbotron text-center">
 
     <h1 style="background-color: #693; padding: 5px; color: white; border-radius: 100px 0px 100px 0px;">Urban Agriculture Demonstration Project</h1>
   </section>
 
-  <div class="album py-5 bg-info">
-    <div class="container">
 
-      <div class="row">
-        <?php 
-      $sql = "SELECT * FROM `products` WHERE ctgy_ID = 3";
-      $result = mysqli_query($conn, $sql);
-      $count_question = mysqli_num_rows($result) ;
-     
-      ?>
-      <div class="row">
-        <?php 
-         if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_array($result)) {
-        $prod_Name = $row['prod_Name'];
-     
-        
-        if (isset($row['prod_ScientificName'])) {
-           $prod_scientific_name= 'Scientific Name: '.$row['prod_ScientificName'];
-        }
-        else{
-           $prod_scientific_name= '';
-        }
-       if (isset($row['prod_EnglishName'])) {
-          $prod_english_name= 'English Name: <i>'.$row['prod_EnglishName'].'<i>';
-        }
-        else{
-           $prod_english_name= '';
-        }
-        if (isset($row['prod_Season'])) {
-             $prod_Season = 'Season: '.$row['prod_Season'];
-        }
-        else{
-           $prod_english_name= '';
-        }
-        
-         ?>
-
-          <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img  class="bd-placeholder-img card-img-top" src="img/uploads/rambutan.png" width="100%" height="100%">
-            <div class="card-body">
-              <p class="card-text">
-                <h3><?php echo $prod_Name?></h3>
-              <?php echo $prod_scientific_name?>
-              <br>
-              <?php echo $prod_english_name?>
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#ActionModal"  data-id="V-<?php echo '1'?>" id="action">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo '1'?>" id="action">Add to Cart</button>
-                </div>
-                <small class="text-muted"><strong> <?php echo $prod_Season?></strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-         <?php
-            }
-          }
-        ?>
-       
-      
-      </div>
-    </div>
-  </div>
 
 </main>
 
@@ -266,7 +179,7 @@ include('dbconfig.php');
       <div class="modal-body">
          <div class="row">
         <div class="col-md-6">
-           <img  class="bd-placeholder-img card-img-top" src="#" width="100%" height="100%" id="modal_prodImg">
+           <img  class="bd-placeholder-img card-img-top" src="img/uploads/blank.png" width="100%" height="100%" id="modal_prodImg">
         </div>
         <div class="col-md-6">
           <h6 id="modal_prodName"></h6>
@@ -274,7 +187,7 @@ include('dbconfig.php');
           <hr>
           <p id="modal_prodDescription"></p>
          
-            <div id="modal_prodPrice"><b>PRICE:</b> &#x20b1;180 Per KG </div>
+            <div id="modal_prodPrice"><b>PRICE:</b> &#x20b1; 180 Per KG </div>
             
         
            <div class="input-group mb-3"  style="width: 150px;">
@@ -332,7 +245,9 @@ include('x-script.php');
   
 
 $(document).on('click', '#view_prod', function(){
+
     var data_id = $(this).data('id');
+ 
      var mh = document.getElementById("modal_header");
         mh.className = mh.className.replace(/\bbg-primary\b/g, "");
         mh.className = mh.className.replace(/\bbg-danger\b/g, "");

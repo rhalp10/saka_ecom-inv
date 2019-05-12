@@ -35,15 +35,15 @@ $filtered_rows = $statement->rowCount();
 foreach($result as $row)
 {
 	
-
+	$available_stocks = get_available_stocks($row["prod_ID"]);
 	$sub_array = array();
 	$sub_array[] = $row["prod_ID"];
 	$sub_array[] =$row["ctgy_Name"];
 	$sub_array[] = $row["prod_Name"];
 	$sub_array[] = $row["prod_Price"];
-	$sub_array[] = get_available_stocks($row["prod_ID"]);
+	$sub_array[] = $available_stocks;
 	$sub_array[] = month($row["prod_SeasonStart"]).' - '.month($row["prod_SeasonEnd"]);
-	$sub_array[] = get_stocks_status($row["prod_Weight"]);
+	$sub_array[] = get_stocks_status($available_stocks);
 	$sub_array[] = '
 <div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -1,12 +1,12 @@
 <?php
 include('db.php');
 include('function.php');
-if(isset($_POST["update"]))
-{
+
+if (isset($_POST['action'])) {
+	
 	$output = array();
 	$statement = $conn->prepare(
-		"SELECT * FROM `user_accounts`
-		WHERE user_ID = '".$_POST["user_ID"]."' 
+		"SELECT * FROM `user` WHERE user_ID  = '".$_POST["account_ID"]."' 
 		LIMIT 1"
 	);
 	$statement->execute();
@@ -14,32 +14,20 @@ if(isset($_POST["update"]))
 	foreach($result as $row)
 	{
 
-		$output["level_ID"] = $row["level_ID"];
+		if (!empty($row['user_img'])) {
+				
+			 $output["ac_Img"] = 'data:image/jpeg;base64,'.base64_encode($row['user_img']);
+			}
+			else{
+			  $output["ac_Img"] = "../img/uploads/blank.png";
+			}
+		
+		$output["lvl_ID"] = $row["lvl_ID"];
+		$output["user_Fullname"] = $row["user_Fullname"];
 		$output["user_Name"] = $row["user_Name"];
-		$output["user_Pass"] = decryptIt($row["user_Pass"]);
+		$output["user_Pass"] = decryptIt($row["user_Pass"]);;
 		$output["user_Email"] = $row["user_Email"];
-		$output["user_status"] = $row["user_status"];
-	
-	}
-	echo json_encode($output);
-}
-
-if (isset($_POST['view'])) {
-	
-	$output = array();
-	$statement = $conn->prepare(
-		"SELECT * FROM `register_info` WHERE user_ID  = '".$_POST["user_ID"]."' 
-		LIMIT 1"
-	);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	foreach($result as $row)
-	{
-
-		$output["reg_fname"] = $row["reg_fname"];
-		$output["reg_lname"] = $row["reg_lname"];
-		$output["reg_address"] = $row["reg_address"];
-		$output["reg_contact"] = $row["reg_contact"];
+		$output["user_Address"] = $row["user_Address"];
 	
 	}
 	echo json_encode($output);

@@ -20,7 +20,7 @@ function get_available_stocks($prod_ID){
           foreach ($harvest as $row) {
             $harvest_Weight = $row["harvest_Weight"];
         }
-    $statement = $conn->prepare("SELECT sum(or_Weight) as or_Weight FROM `order` WHERE prod_ID = $prod_ID");
+    $statement = $conn->prepare("SELECT sum(ord_Weight) as or_Weight FROM `order_item` WHERE prod_ID =  $prod_ID");
     $statement->execute();
 
     $order = $statement->fetchAll();
@@ -31,7 +31,7 @@ function get_available_stocks($prod_ID){
         $harvest_Weight = "0.00";
     }
     if (empty($or_Weight)) {
-        $harvest_Weight = "0.00";
+        $or_Weight = "0.00";
     }
       
    

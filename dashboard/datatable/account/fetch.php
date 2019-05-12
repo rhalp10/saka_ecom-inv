@@ -4,13 +4,13 @@ include('function.php');
 $query = '';
 $output = array();
 $query .= "SELECT *";
-$query .= "FROM `user_accounts` ua
-INNER JOIN `user_level` `ul` ON `ua`.`level_ID` = `ul`.`level_ID`";
+$query .= "FROM `user` ua
+LEFT JOIN `user_level` `ul` ON `ua`.`lvl_ID` = `ul`.`lvl_ID`";
 if(isset($_POST["search"]["value"]))
 {
  $query .= 'WHERE user_ID LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR user_Name LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR level_Name LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR lvl_Name LIKE "%'.$_POST["search"]["value"].'%" ';
 }
 
 
@@ -37,12 +37,22 @@ foreach($result as $row)
 
 	$sub_array = array();
 	$sub_array[] = $row["user_ID"];
-	$sub_array[] = check_user_level($row["level_ID"]);
+	$sub_array[] = check_user_level($row["lvl_ID"]);
 	$sub_array[] = $row["user_Name"];
-	$sub_array[] = check_status_level($row["user_status"]);
 	$sub_array[] = $row["user_Registered"];
-	$sub_array[] = '<div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Action<span class="caret"></span></button><ul class="dropdown-menu"><li><a href="#" id="'.$row["user_ID"].'" class="view">View Info</a></li><li><a href="#" id="'.$row["user_ID"].'" class="update">Update</a></li><li><a href="#" id="'.$row["user_ID"].'" class="delete">Delete</a></li></ul></div>';
-	// $sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete">Delete</button>';
+
+		$sub_array[] = '
+<div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item view"  id="'.$row["user_ID"].'">View</a>
+    <a class="dropdown-item edit"  id="'.$row["user_ID"].'">Edit</a>
+     <div class="dropdown-divider"></div>
+    <a class="dropdown-item delete" id="'.$row["user_ID"].'">Delete</a>
+  </div>
+</div>';
 	$data[] = $sub_array;
 }
 $output = array(

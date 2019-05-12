@@ -1,4 +1,6 @@
-
+<?php 
+include('../dbconfig.php');
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,11 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Dashboard Template · Bootstrap</title>
+
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <title>Manage Account</title>
 
 
     <!-- Bootstrap core CSS -->
 <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../datatables/datatables.min.css"/>
+ 
+
 
 
     <style>
@@ -35,8 +42,8 @@
   </head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">SAKA</a>
+  
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
       <a class="nav-link" href="#">Sign out</a>
@@ -52,155 +59,314 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group mr-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar"></span>
-            This week
-          </button>
-        </div>
+        <h1 class="h2">Manage Account</h1>
+        
       </div>
-
-      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-      <h2>Section title</h2>
       <div class="table-responsive">
-        <table class="table table-striped table-sm">
+         <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#account_modal">Add</button>
+         <br><br>
+        <table class="table table-striped table-sm" id="account_data">
           <thead>
             <tr>
               <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
+              <th>Level</th>
+              <th>Username</th>
+              <th>Date</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>Lorem</td>
-              <td>ipsum</td>
-              <td>dolor</td>
-              <td>sit</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td>consectetur</td>
-              <td>adipiscing</td>
-              <td>elit</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>Integer</td>
-              <td>nec</td>
-              <td>odio</td>
-              <td>Praesent</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>libero</td>
-              <td>Sed</td>
-              <td>cursus</td>
-              <td>ante</td>
-            </tr>
-            <tr>
-              <td>1,004</td>
-              <td>dapibus</td>
-              <td>diam</td>
-              <td>Sed</td>
-              <td>nisi</td>
-            </tr>
-            <tr>
-              <td>1,005</td>
-              <td>Nulla</td>
-              <td>quis</td>
-              <td>sem</td>
-              <td>at</td>
-            </tr>
-            <tr>
-              <td>1,006</td>
-              <td>nibh</td>
-              <td>elementum</td>
-              <td>imperdiet</td>
-              <td>Duis</td>
-            </tr>
-            <tr>
-              <td>1,007</td>
-              <td>sagittis</td>
-              <td>ipsum</td>
-              <td>Praesent</td>
-              <td>mauris</td>
-            </tr>
-            <tr>
-              <td>1,008</td>
-              <td>Fusce</td>
-              <td>nec</td>
-              <td>tellus</td>
-              <td>sed</td>
-            </tr>
-            <tr>
-              <td>1,009</td>
-              <td>augue</td>
-              <td>semper</td>
-              <td>porta</td>
-              <td>Mauris</td>
-            </tr>
-            <tr>
-              <td>1,010</td>
-              <td>massa</td>
-              <td>Vestibulum</td>
-              <td>lacinia</td>
-              <td>arcu</td>
-            </tr>
-            <tr>
-              <td>1,011</td>
-              <td>eget</td>
-              <td>nulla</td>
-              <td>Class</td>
-              <td>aptent</td>
-            </tr>
-            <tr>
-              <td>1,012</td>
-              <td>taciti</td>
-              <td>sociosqu</td>
-              <td>ad</td>
-              <td>litora</td>
-            </tr>
-            <tr>
-              <td>1,013</td>
-              <td>torquent</td>
-              <td>per</td>
-              <td>conubia</td>
-              <td>nostra</td>
-            </tr>
-            <tr>
-              <td>1,014</td>
-              <td>per</td>
-              <td>inceptos</td>
-              <td>himenaeos</td>
-              <td>Curabitur</td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>sodales</td>
-              <td>ligula</td>
-              <td>in</td>
-              <td>libero</td>
-            </tr>
+            
+     
           </tbody>
         </table>
+
+
+<div class="modal fade" id="account_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="account_modal_title">Add New Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="product_modal_content">
+    
+      <form method="post" id="account_form" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="acc_username">Username</label>
+                  <input type="text" class="form-control" id="acc_username" name="acc_username" placeholder="" value=""  required="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="acc_email">Email:</label>
+                  <input type="email" class="form-control" id="acc_email" name="acc_email" placeholder="" value="" required="">
+                </div>
+              </div>  
+               <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="acc_name">Full Name</label>
+                  <input type="text" class="form-control" id="acc_name" name="acc_name" placeholder="" value="" required="">
+                </div>
+              </div> 
+                <div class="form-group">
+                <label for="prod_category">Level</label>
+                <select class="form-control" id="acc_lvl" name="acc_lvl">
+                  <?php 
+                  $sql = "SELECT * FROM `user_level`";
+
+                  $result = mysqli_query($conn, $sql);
+                  while ($row = mysqli_fetch_array($result)) {
+                  ?>
+                  <option value="<?php echo $row["lvl_ID"];?>"><?php echo $row["lvl_Name"];?></option>
+                  <?php
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="acc_pass" id="l_acc_pass">Password</label>
+                  <input type="password" class="form-control" id="acc_pass" name="acc_pass" placeholder="" value="" required="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="acc_cpass" id="l_acc_cpass">Confirm:</label>
+                  <input type="password" class="form-control" id="acc_cpass" name="acc_cpass" placeholder="" value="" required="">
+                </div>
+              </div> 
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="acc_add">Address</label>
+                  <input type="text" class="form-control" id="acc_add" name="acc_add" placeholder="" value="" required="">
+                </div>
+              </div> 
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="account_ID" id="account_ID" />
+        <input type="hidden" name="operation" id="operation" />
+        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_account">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+       </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="delaccount_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="account_modal_title">Delete this Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+        <div class="btn-group">
+        <button type="submit" class="btn btn-danger" id="account_delform">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
     </main>
   </div>
 </div>
+
 <script src="../js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../js/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="../js/jquery-slim.min.js"><\/script>')</script>
+
+      <script src="../js/jquery-3.3.1.min.js" ></script>
+      <script src="../js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
         <script src="../js/feather.min.js"></script>
-        <script src="../js/Chart.min.js"></script>
-        <script src="../js/dashboard.js"></script></body>
+        <script src="../js/dashboard.js"></script>
+        <script type="text/javascript" src="../datatables/datatables.min.js"></script>
+        <script type="text/javascript">
+   
+
+
+          $(document).ready(function() {
+             
+            var dataTable = $('#account_data').DataTable({
+            "processing":true,
+            "serverSide":true,
+            "order":[],
+            "ajax":{
+              url:"datatable/account/fetch.php",
+              type:"POST"
+            },
+            "columnDefs":[
+              {
+                "targets":[0],
+                "orderable":false,
+              },
+            ],
+
+          });
+
+
+
+          $(document).on('submit', '#account_form', function(event){
+            event.preventDefault();
+
+              $.ajax({
+                url:"datatable/account/insert.php",
+                method:'POST',
+                data:new FormData(this),
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  alert(data);
+                  $('#account_form')[0].reset();
+                  $('#account_modal').modal('hide');
+                  dataTable.ajax.reload();
+                }
+              });
+           
+          });
+
+          $(document).on('click', '.add', function(){
+            $('#account_modal_title').text('Add New Account');
+            $("#acc_username").prop("disabled", false);
+            $('#account_form')[0].reset();
+            $('#submit_input').show();
+            $('#submit_input').text('Submit');
+            $('#submit_input').val('submit_account');
+            $('#operation').val("submit_account");
+          });
+
+          $(document).on('click', '.view', function(){
+            var account_ID = $(this).attr("id");
+            $('#account_modal_title').text('View Account');
+            $('#account_modal').modal('show');
+            $("#acc_pass").hide();
+            $("#acc_cpass").hide();
+            $("#l_acc_pass").hide();
+            $("#l_acc_cpass").hide();
+            
+             $.ajax({
+                url:"datatable/account/fetch_single.php",
+                method:'POST',
+                data:{action:"account_view",account_ID:account_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+
+                $("#acc_username").prop("disabled", true);
+                $("#acc_email").prop("disabled", true);
+                $("#acc_name").prop("disabled", true);
+                $("#acc_lvl").prop("disabled", true);
+                $("#acc_add").prop("disabled", true);
+
+                  $('#acc_username').val(data.user_Name);
+                  $('#acc_email').val(data.user_Email);
+                  $('#acc_name').val(data.user_Fullname);
+                  $('#acc_pass').val(data.user_Pass);
+                  $('#acc_lvl').val(data.lvl_ID).change();
+                  
+                  $('#acc_cpass').val(data.user_Pass);
+                  $('#acc_add').val(data.user_Address);
+
+                  $('#submit_input').hide();
+                  $('#account_ID').val(account_ID);
+                  $('#submit_input').text('Update');
+                  $('#submit_input').val('account_edit');
+                  $('#operation').val("account_edit");
+                  
+                }
+              });
+
+
+            });
+          $(document).on('click', '.edit', function(){
+            var account_ID = $(this).attr("id");
+            $('#account_modal_title').text('Edit Account');
+            $('#account_modal').modal('show');
+          
+            $("#acc_pass").show();
+            $("#acc_cpass").show();
+            $("#l_acc_pass").show();
+            $("#l_acc_cpass").show();
+
+            
+             $.ajax({
+                url:"datatable/account/fetch_single.php",
+                method:'POST',
+                data:{action:"account_view",account_ID:account_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+                  $("#acc_username").prop("disabled", true);
+                  $("#acc_email").prop("disabled", false);
+                  $("#acc_name").prop("disabled", false);
+                  $("#acc_lvl").prop("disabled", false);
+                  $("#acc_add").prop("disabled", false);
+                  $("#acc_pass").prop("disabled", false);
+                  $("#acc_cpass").prop("disabled", false);
+
+                  $('#acc_username').val(data.user_Name);
+                  $('#acc_email').val(data.user_Email);
+                  $('#acc_name').val(data.user_Fullname);
+                  $('#acc_pass').val(data.user_Pass);
+                  $('#acc_lvl').val(data.lvl_ID).change();
+                  
+                  $('#acc_cpass').val(data.user_Pass);
+                  $('#acc_add').val(data.user_Address);
+
+                  $('#submit_input').show();
+                  $('#account_ID').val(account_ID);
+                  $('#submit_input').text('Update');
+                  $('#submit_input').val('account_update');
+                  $('#operation').val("account_edit");
+                  
+                }
+              });
+
+
+            });
+            $(document).on('click', '.delete', function(){
+            var account_ID = $(this).attr("id");
+             $('#delaccount_modal').modal('show');
+             $('.submit').hide();
+             
+             $('#account_ID').val(account_ID);
+            });
+
+           
+
+
+          $(document).on('click', '#account_delform', function(event){
+             var account_ID =  $('#account_ID').val();
+            $.ajax({
+             type        :   'POST',
+             url:"datatable/account/insert.php",
+             data        :   {operation:"delete_account",account_ID:account_ID},
+             dataType    :   'json',
+             complete     :   function(data) {
+               $('#delaccount_modal').modal('hide');
+               alert(data.responseText);
+               dataTable.ajax.reload();
+               dataTable_product_data.ajax.reload();
+                
+             }
+            })
+           
+          });
+          
+          } );
+
+
+        </script>
+        </body>
+
 </html>

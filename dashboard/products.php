@@ -9,6 +9,7 @@ include('../dbconfig.php');
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <title>Manage Goods and Crops</title>
 
 
@@ -57,11 +58,9 @@ include('../dbconfig.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Goods and Crops</h1>
+        <h1 class="h2">List of Goods and Crops</h1>
         
       </div>
-
-      <h2>List of Goods and Crops</h2>
       <div class="table-responsive">
          <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#product_modal">Add</button>
          <br><br>
@@ -72,16 +71,12 @@ include('../dbconfig.php');
               <th>Category</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Weight</th>
+              <th>Quantity(KG)</th>
               <th>Season</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            
-     
-          </tbody>
         </table>
 
 
@@ -100,12 +95,14 @@ include('../dbconfig.php');
              <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="prod_img">
-                 <img src="../img/uploads/blank.png" class="rounded float-left" alt="..." id="prod_img_container" runat="server" >
+                 <img src="../img/uploads/blank.png" class="rounded float-left" alt="..." id="prod_img_container" runat="server" style="max-height: 250px; max-width: 250px;  background-repeat:no-repeat;
+  background-size:cover;height: auto;
+width:auto;">
               </label>
               <input type="file" class="form-control-file" id="prod_img" name="prod_img">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="prod_weight">Available:(<i id="prod_weight"></i>)</label>
+                  <label for="prod_weight" id="prod_weight_label">Available:(<i id="prod_weight"></i>)</label>
                   
                 </div>
               </div>
@@ -145,7 +142,7 @@ include('../dbconfig.php');
                <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="prod_price">Price:</label>
-                  <input type="text" class="form-control " aria-label="Amount (to the nearest dollar)" id="prod_price" name="prod_price" value="0"  pattern="\d*" maxlength="6" >
+                  <input type="text" class="form-control " aria-label="Amount (to the nearest dollar)" id="prod_price" name="prod_price" value="0"   maxlength="6" >
                 </div>
                <!--  <div class="form-group col-md-6">
                   <label for="prod_qnty">Weight (KG)</label>
@@ -216,14 +213,12 @@ include('../dbconfig.php');
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" id="product_delform"  enctype="multipart/form-data">
         <div class="text-center">
         <div class="btn-group">
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="submit" class="btn btn-danger" id="product_delform">Delete</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
         </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -295,7 +290,7 @@ include('../dbconfig.php');
            var prod_season_start = $('prod_season_start').val();
            var prod_season_end = $('prod_season_end').val();
 
-           $('#operation').val("submit_product");
+   
   
             var extension = $('#prod_img').val().split('.').pop().toLowerCase();
             if(extension != '')
@@ -329,11 +324,13 @@ include('../dbconfig.php');
             $('#product_modal_title').text('Add New Product');
             $('#product_form')[0].reset();
             $('#prod_img_container').attr('src', '../img/uploads/blank.png');
-           
+             $("#prod_img").show();
             $('#submit_input').show();
             $('#submit_input').text('Submit');
             $('#submit_input').val('submit_product');
             $('#operation').val("submit_product");
+            $('#prod_weight_label').hide();
+            
             
            
           });
@@ -350,6 +347,19 @@ include('../dbconfig.php');
                 dataType    :   'json',
                 success:function(data)
                 {
+
+            $("#prod_name").prop("disabled", true);
+            $("#prod_category").prop("disabled", true);
+            $("#prod_descr").prop("disabled", true);
+            $("#prod_sciname").prop("disabled", true);
+            $("#prod_engname").prop("disabled", true);
+            $("#prod_price").prop("disabled", true);
+            $("#prod_weight").prop("disabled", true);
+            $("#prod_season_end").prop("disabled", true);
+            $("#prod_season_start").prop("disabled", true);
+             $("#prod_img").hide();
+            
+
                   $('#prod_img_container').attr('src', data.prod_Img);
                   $('#prod_name').val(data.prod_Name);
                   $('#prod_category').val(data.ctgy_ID).change();
@@ -361,8 +371,9 @@ include('../dbconfig.php');
                   $('#prod_season_start').val(data.prod_SeasonStart).change();
                   $('#prod_season_end').val(data.prod_SeasonEnd).change();
                   $('#submit_input').hide();
+                  $('#prod_weight_label').show();
                   $('#product_ID').val(product_ID);
-                  $('#operation').val("Edit");
+                  $('#operation').val("product_view");
                   
                 }
               });
@@ -376,12 +387,24 @@ include('../dbconfig.php');
 
              $.ajax({
                 url:"datatable/products/fetch_single.php",
-                method:'POST',
+                type:'POST',
                 data:{action:"product_view",product_ID:product_ID},
                 dataType    :   'json',
                 success:function(data)
                 {
+
+            $("#prod_name").prop("disabled", false);
+            $("#prod_category").prop("disabled", false);
+            $("#prod_descr").prop("disabled", false);
+            $("#prod_sciname").prop("disabled", false);
+            $("#prod_engname").prop("disabled", false);
+            $("#prod_price").prop("disabled", false);
+            $("#prod_weight").prop("disabled", false);
+            $("#prod_season_end").prop("disabled", false);
+            $("#prod_season_start").prop("disabled", false);
+
                   $('#prod_img_container').attr('src', data.prod_Img);
+                    $("#prod_img").show();
                      $('#prod_name').val(data.prod_Name);
                   $('#prod_category').val(data.ctgy_ID).change();
                   $('#prod_descr').val(data.prod_Description);
@@ -392,10 +415,11 @@ include('../dbconfig.php');
                   $('#prod_season_start').val(data.prod_SeasonStart).change();
                   $('#prod_season_end').val(data.prod_SeasonEnd).change();
                   $('#submit_input').show();
+                  $('#prod_weight_label').show();
                   $('#submit_input').text('Update');
                   $('#submit_input').val('submit_upproduct');
+                  $('#operation').val("product_edit");
                   $('#product_ID').val(product_ID);
-                  $('#operation').val("Edit");
                   
                 }
               });
@@ -407,28 +431,26 @@ include('../dbconfig.php');
              $('#delproduct_modal').modal('show');
               $('.submit').hide();
              
-             // $('#product_ID').val(product_ID);
+             $('#product_ID').val(product_ID);
             });
 
            
 
 
-          $(document).on('submit', '#product_delform', function(event){
-            event.preventDefault();
+          $(document).on('click', '#product_delform', function(event){
              var product_ID =  $('#product_ID').val();
-             $.ajax({
-                url:"datatable/products/insert.php",
-                method:'POST',
-                data:{operation:"delete_product",product_ID:product_ID},
-                dataType    :   'json',
-                success:function(data)
-                {
-                  alert(data);
-                  $('#delproduct_modal').modal('hide');
-                  dataTable.ajax.reload();
-                  
-                }
-              });
+            $.ajax({
+             type        :   'POST',
+             url:"datatable/products/insert.php",
+             data        :   {operation:"delete_product",product_ID:product_ID},
+             dataType    :   'json',
+             complete     :   function(data) {
+               $('#delproduct_modal').modal('hide');
+               alert(data.responseText);
+               dataTable.ajax.reload();
+                
+             }
+            })
            
           });
           

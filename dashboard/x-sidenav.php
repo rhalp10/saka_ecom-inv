@@ -31,11 +31,11 @@ function navlist($pagefile_name,$name,$link,$icon){
         <ul class="nav flex-column">
           <?php 
           navlist($pagefile_name,"Dashboard","index","home");
+          navlist($pagefile_name,"Account","account","users");
           navlist($pagefile_name,"Harvest","harvest","file");
-          navlist($pagefile_name,"Orders","orders","file");
           navlist($pagefile_name,"Products","products","shopping-cart");
-           navlist($pagefile_name,"Account","account","users");
-           navlist($pagefile_name,"Customers","customers","users");
+          navlist($pagefile_name,"Orders","orders","file");
+           
           ?>
      <!--      <li class="nav-item">
             <a class="nav-link" href="#">

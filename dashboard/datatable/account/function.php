@@ -1,10 +1,22 @@
 <?php
-include('../../../data-md5.php');
+function encryptIt($q)
+{
+  $cryptKey = 'qJB0rGtIn5UB1xG03efyCp';
+  $qEncoded = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($cryptKey), $q, MCRYPT_MODE_CBC, md5(md5($cryptKey))));
+  return ($qEncoded);
+}
+
+function decryptIt($q)
+{
+  $cryptKey = 'qJB0rGtIn5UB1xG03efyCp';
+  $qDecoded = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($cryptKey), base64_decode($q), MCRYPT_MODE_CBC, md5(md5($cryptKey))), "\0");
+  return ($qDecoded);
+}
 
 function get_total_all_records()
 {
 	include('db.php');
-	$statement = $conn->prepare("SELECT * FROM `user_accounts`");
+	$statement = $conn->prepare("SELECT * FROM `user`");
 	$statement->execute();
 	$result = $statement->fetchAll();
 	return $statement->rowCount();
@@ -13,33 +25,16 @@ function get_total_all_records()
 function check_user_level($var)
 {
 	include('db.php');
-	$statement = $conn->prepare("SELECT * FROM `user_level` WHERE `level_ID` = $var");
+	$statement = $conn->prepare("SELECT * FROM `user_level` WHERE `lvl_ID` = $var");
 	$statement->execute();
 	$result = $statement->fetchAll();
 	foreach($result as $row)
 	{
-		$level_name = $row["level_name"];
+		$level_name = $row["lvl_Name"];
 	}
 	return $level_name;
 }
 
-function check_status_level($var)
-{
-	
-	if ($var == 1) {
-	$user_status = '<span class="label bg-green">Active</span>';
-	}
-	else if ($var == 2) {
-	$user_status = '<span class="label bg-red">Ban</span>';
-	}
-	else if ($var == 0){
-		$user_status = '<span class="label bg-orange">Inactive</span>';
-	}
-	else{
-		$user_status = '<span class="label bg-red">Error</span>';
-	}
-	return $user_status;
 
-}
 
 ?>

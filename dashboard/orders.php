@@ -1,4 +1,6 @@
-
+<?php 
+include('../dbconfig.php');
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Dashboard Template · Bootstrap</title>
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <title>Manage Order</title>
 
 
     <!-- Bootstrap core CSS -->
@@ -55,80 +58,77 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Inventory</h1>
+        <h1 class="h2">Manage Order</h1>
         
       </div>
-
-      <h2>List of Product</h2>
       <div class="table-responsive">
-         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">Add</button>
-         <br><br>
-        <table class="table table-striped table-sm" id="example">
+        <table class="table table-striped table-sm" id="order_data">
           <thead>
             <tr>
               <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Date</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>Lorem</td>
-              <td>ipsum</td>
-              <td>dolor</td>
-              <td>
-                  <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
-                  <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Edit</button>
-                   <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Delete</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td>consectetur</td>
-              <td>adipiscing</td>
-              <td>
-                  <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
-                  <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Edit</button>
-                   <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Delete</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>Integer</td>
-              <td>nec</td>
-              <td>odio</td>
-              <td>
-                  <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
-                  <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Edit</button>
-                   <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Delete</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>libero</td>
-              <td>Sed</td>
-              <td>cursus</td>
-              <td>
-                  <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
-                  <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Edit</button>
-                   <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#ActionModal"  data-id="A-<?php echo $prod_ID?>" id="action">Delete</button>
-                </div>
-              </td>
-            </tr>
+            
      
           </tbody>
         </table>
+
+
+<div class="modal fade" id="order_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="account_modal_title">Add Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="product_modal_content">
+    
+      <form method="post" id="order_form" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="acc_username">Username</label>
+                  <div  id="acc_username" ></div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="acc_email">Email:</label>
+                  <div id="acc_email"></div>
+                </div>
+              </div>  
+               <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="acc_name">Full Name</label>
+                  <div id="acc_name"></div>
+             
+                </div>
+              </div> 
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="acc_add">Address</label>
+                  <div id="acc_add"></div>
+                </div>
+              </div> 
+              <div id="load_order">
+                
+              </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="order_ID" id="order_ID" />
+        <input type="hidden" name="operation" id="operation" />
+        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_order">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+       </form>
+    </div>
+  </div>
+</div>
+
       </div>
     </main>
   </div>
@@ -137,15 +137,93 @@
 <script src="../js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="../js/jquery-slim.min.js"><\/script>')</script>
 
-      <script src="../js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
       <script src="../js/jquery-3.3.1.min.js" ></script>
+      <script src="../js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
         <script src="../js/feather.min.js"></script>
         <script src="../js/dashboard.js"></script>
         <script type="text/javascript" src="../datatables/datatables.min.js"></script>
         <script type="text/javascript">
+   
+
+
           $(document).ready(function() {
-              $('#example').DataTable();
+             
+            var dataTable = $('#order_data').DataTable({
+            "processing":true,
+            "serverSide":true,
+            "order":[],
+            "ajax":{
+              url:"datatable/order/fetch.php",
+              type:"POST"
+            },
+            "columnDefs":[
+              {
+                "targets":[0],
+                "orderable":false,
+              },
+            ],
+
+          });
+
+
+
+          $(document).on('submit', '#order_form', function(event){
+            event.preventDefault();
+
+              $.ajax({
+                url:"datatable/order/insert.php",
+                method:'POST',
+                data:new FormData(this),
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  alert(data);
+                  $('#account_form')[0].reset();
+                  $('#account_modal').modal('hide');
+                  dataTable.ajax.reload();
+                }
+              });
+           
+          });
+
+
+          $(document).on('click', '.view', function(){
+            var order_ID = $(this).attr("id");
+            $('#account_modal_title').text('View Order');
+            $('#order_modal').modal('show');
+   
+            
+             $.ajax({
+                url:"datatable/order/fetch_single.php",
+                method:'POST',
+                data:{action:"order_view",order_ID:order_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+
+
+                  $('#acc_username').text(data.user_Name);
+                  $('#acc_email').text(data.user_Email);
+                  $('#acc_name').text(data.user_Fullname);
+                  $('#acc_add').text(data.user_Address);
+                  $( "#load_order" ).load( "datatable/order/fetchtable.php?order_ID="+order_ID);
+
+                  $('#submit_input').show();
+                  $('#account_ID').val(order_ID);
+                  $('#submit_input').text('Process');
+                  $('#submit_input').val('order_process');
+                  $('#operation').val("order_process");
+                  
+                }
+              });
+
+
+            });
+          
           } );
+
+
         </script>
         </body>
 
