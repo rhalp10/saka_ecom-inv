@@ -1,3 +1,7 @@
+<?php 
+session_start();
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -66,7 +70,7 @@
   ================================================== -->
   <!-- Wrap the rest of the page in another container to center all the content. -->
 
-  <div class="container marketing">x
+  <div class="container marketing">
     <!-- START THE FEATURETTES -->
 
     <hr class="featurette-divider">
@@ -154,7 +158,27 @@
 
   </div><!-- /.container -->
 
+<!-- Modal -->
+<div class="modal fade" id="modal_cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" id="modal_header">
+        <h5 class="modal-title" id="ActionModalLabel">Shopping Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="cart_mbody">
+       
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="checkout">Check out</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <?php 
 include('x-footer.php');
 ?>
@@ -166,6 +190,48 @@ include('x-script.php');
 
     <script src="OwlCarousel/dist/owl.carousel.js"></script>
           <script>
+ $(document).ready(function(){
+  refreshTable();
+});
+function refreshTable(){
+    $('#cart_mbody').load('load_shoppincart.php', function(){
+       setTimeout(refreshTable, 5000);
+    });
+}
+
+  $(document).on('click', '#checkout', function(){
+    or_ID = $('#or_ID').val();
+
+  if(confirm("Are you sure you want to checkout this items?"))
+    {
+      if ($('#or_ID').length) {
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"checkout",or_ID:or_ID},
+            dataType    :   'json',
+            complete     :   function(data) {
+              alert(data.responseJSON.msg);
+              if (data.responseJSON.success) {
+                    window.location.assign("order?or_ID="+or_ID);
+              }
+          
+            }
+        });
+      }
+      else{
+         alert('You must order first');
+      }
+      
+    
+    }
+    else
+    {
+      return false; 
+    }
+      
+  
+});
             $(document).ready(function() {
               $('.owl-carousel').owlCarousel({
                 loop: true,

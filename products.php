@@ -1,5 +1,6 @@
 <?php 
 include('dbconfig.php');
+session_start();
 ?>
 <!doctype html>
 <html lang="en">
@@ -68,7 +69,7 @@ include('dbconfig.php');
       <h1 class="jumbotron-heading">LIST OF AVAILABLE PRODUCT</h1>
   
     </div>
-    <h1 style="background-color: #693; padding: 5px; color: white; border-radius: 100px 0px 100px 0px;">Fruits and Vegetables </h1>
+    <h1 style="background-color: #693; padding: 5px; color: white;">Fruits and Vegetables </h1>
   </section>
 
   <div class="album py-5 bg-secondary">
@@ -121,10 +122,10 @@ include('dbconfig.php');
          ?>
 
           <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
+          <div class="card mb-4 shadow-sm" >
             <img  class="bd-placeholder-img card-img-top" src="<?php echo $prod_Img?>" width="100%" height="100%" >
-            <div class="card-body">
-              <p class="card-text">
+            <div class="card-body" style="min-height: 200px;">
+              <p class="card-text" >
               <strong><?php echo $prod_Name?><?php echo $av?></strong>
               <br>
               <?php echo $prod_scientific_name;?>
@@ -134,7 +135,7 @@ include('dbconfig.php');
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="action">Add to Cart</button>
+                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="addcart_prod">Add to Cart</button>
                 </div>
                 <small class="text-muted"><strong> <?php echo $prod_Season?></strong></small>
               </div>
@@ -153,13 +154,13 @@ include('dbconfig.php');
 
     <section class="jumbotron text-center">
 
-    <h1 style="background-color: #693; padding: 5px; color: white; border-radius: 100px 0px 100px 0px;">Open Field Demonstration Project</h1>
+    <h1 style="background-color: #693; padding: 5px; color: white;">Open Field Demonstration Project</h1>
   </section>
 
 
       <section class="jumbotron text-center">
 
-    <h1 style="background-color: #693; padding: 5px; color: white; border-radius: 100px 0px 100px 0px;">Urban Agriculture Demonstration Project</h1>
+    <h1 style="background-color: #693; padding: 5px; color: white;">Urban Agriculture Demonstration Project</h1>
   </section>
 
 
@@ -200,12 +201,13 @@ include('dbconfig.php');
                 <span class="input-group-text" id="prod_plus" >+</span>
               </div>
             </div>
-
-            <button type="button" class="btn btn-sm btn-warning">Add to Cart</button>
+         
+            <button type="button" class="btn btn-sm btn-warning" id="addtoCart">Add to Cart</button>
         </div>
       </div>
       </div>
       <div class="modal-footer">
+           <input type="hidden" name="mprod_ID" id="mprod_ID" value="">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -223,15 +225,11 @@ include('dbconfig.php');
         </button>
       </div>
       <div class="modal-body" id="cart_mbody">
-        <button type="button" id="productsAdd"
-        class="btn btn-primary"
-        onclick="productsAdd();">
-  Add
-</button>
+       
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Check out</button>
+        <button type="button" class="btn btn-secondary" id="checkout">Check out</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -242,7 +240,15 @@ include('x-footer.php');
 include('x-script.php');
 ?>
 <script type="text/javascript">
-  
+  $(document).ready(function(){
+  refreshTable();
+});
+function refreshTable(){
+    $('#cart_mbody').load('load_shoppincart.php', function(){
+       setTimeout(refreshTable, 5000);
+    });
+}
+
 
 $(document).on('click', '#view_prod', function(){
 
@@ -262,6 +268,8 @@ $(document).on('click', '#view_prod', function(){
             data        :   {action:"product_view",data_id:data_id},
             dataType    :   'json',
             complete     :   function(data) {
+              
+              $("#mprod_ID").val(data_id);
               $("#modal_prodImg").attr("src",data.responseJSON.prod_Img);
               $('#modal_prodName').html(data.responseJSON.prod_Name);
               $('#modal_prodDescription').text(data.responseJSON.prod_Description);
@@ -279,6 +287,43 @@ $(document).on('click', '#view_prod', function(){
 
   
 });
+$(document).on('click', '#addcart_prod', function(){
+
+    var data_id = $(this).data('id');
+ 
+     var mh = document.getElementById("modal_header");
+        mh.className = mh.className.replace(/\bbg-primary\b/g, "");
+        mh.className = mh.className.replace(/\bbg-danger\b/g, "");
+        $('#modal_header').css("color","white");
+        mh.classList.add("modal-header");
+        mh.classList.add("bg-info");
+        $('#ActionModalLabel').html('Add to Cart');
+        $('#modal-loading').show();
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"product_view",data_id:data_id},
+            dataType    :   'json',
+            complete     :   function(data) {
+              $("#mprod_ID").val(data_id);
+              $("#modal_prodImg").attr("src",data.responseJSON.prod_Img);
+              $('#modal_prodName').html(data.responseJSON.prod_Name);
+              $('#modal_prodDescription').text(data.responseJSON.prod_Description);
+              $('#modal_prodScientificName').text(data.responseJSON.prod_ScientificName);
+              $('#modal_prodEnglishName').text(data.responseJSON.prod_EnglishName);
+              $('#modal_prodPrice').html('<b>PRICE:</b> &#x20b1; '+data.responseJSON.prod_Price+' Per KG ');
+              $('#modal_prodQnty').html('Available: (<i id="avQnty">'+data.responseJSON.prod_Qnty+'</i>) KG');
+              $('#modal_prodSeason').text(data.responseJSON.prod_Season);
+            
+               
+            }
+        })
+
+
+
+  
+});
+
  $(document).on('click', '#prod_minus', function(){
   var item_qty = $('#item_number').val();
  
@@ -323,6 +368,64 @@ var  new_item_qty = parseFloat(item_qty) + .1;
 });
 
 
+
+
+  $(document).on('click', '#checkout', function(){
+    or_ID = $('#or_ID').val();
+
+  if(confirm("Are you sure you want to checkout this items?"))
+    {
+      if ($('#or_ID').length) {
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"checkout",or_ID:or_ID},
+            dataType    :   'json',
+            complete     :   function(data) {
+              alert(data.responseJSON.msg);
+              if (data.responseJSON.success) {
+                    window.location.assign("order?or_ID="+or_ID);
+              }
+          
+            }
+        });
+      }
+      else{
+         alert('You must order first');
+      }
+      
+    
+    }
+    else
+    {
+      return false; 
+    }
+      
+  
+});
+
+  $(document).on('click', '#addtoCart', function(){
+      if(confirm("Are you sure you want to cart this items?"))
+    {
+      var prod_ID = $("#mprod_ID").val();
+      var item_qty = $('#item_number').val();
+  
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"addtoCart",prod_ID:prod_ID,item_qty:item_qty},
+            dataType    :   'json',
+            complete     :   function(data) {
+              alert(data.responseJSON.msg);
+            }
+        });
+    }
+    else
+    {
+      return false; 
+    }
+    });
+  
 function productsAdd() {
   $("#cartTable tbody").append(
       "<tr>" +
@@ -333,6 +436,8 @@ function productsAdd() {
       "</tr>"
   );
 }
+
+
 
 
 </script>

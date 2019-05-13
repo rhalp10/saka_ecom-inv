@@ -1,5 +1,6 @@
 <?php 
 include('db.php');
+session_start();
 $or_ID = $_REQUEST['order_ID'];
 $sql = "SELECT * FROM `order` `ord`
 LEFT JOIN `user` `u` ON `ord`.`user_ID` = `u`.`user_ID` 
@@ -33,7 +34,18 @@ $result = $statement->fetchAll();
  <ul class="list-group">
     <li class="list-group-item active">Order #<?php echo $or_ID;?></li>
     <li class="list-group-item"><?php echo $ors_Name;?><br>
-		Placed on <?php echo $or_ID;?> <a class="btn btn-sm btn-info proceed float-right" href="order_print?order_ID=1" target="_BLANK">PRINT</a></li>
+		Placed on <?php echo $or_ID;?> <?php 
+    	if ($_SESSION['login_id'] != 2) {
+    		?>
+    		<a class="btn btn-sm btn-info proceed float-right" href=" dashboard/order_print?order_ID=1" target="_BLANK">PRINT</a>
+    		<?php
+    	}
+    	else{
+    		?>
+    		<a class="btn btn-sm btn-info proceed float-right" href="order_print?order_ID=1" target="_BLANK">PRINT</a>
+    		<?php
+    	}
+    	?></li>
 	<li class="list-group-item ">
 		<table class="table table-striped table-sm" >
 			<thead>

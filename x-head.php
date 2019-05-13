@@ -42,7 +42,7 @@ else{
 
 
 
-    <?php if ($pagefile_name == "index" or  $pagefile_name == NULL ): ?>
+    <?php if ($pagefile_name == "index" or  $pagefile_name == NULL  or (preg_match( '/^order.*/', $pagefile_name)) ): ?>
         <style>
       .bd-placeholder-img {
         font-size: 1.125rem;

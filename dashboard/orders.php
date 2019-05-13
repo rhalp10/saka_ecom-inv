@@ -1,5 +1,10 @@
 <?php 
-include('../dbconfig.php');
+include('../session.php');
+
+
+if ($_SESSION['login_level'] !=  2) {
+    header('Location: ../index.php');
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -45,7 +50,7 @@ include('../dbconfig.php');
   
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
+      <a class="nav-link" href="../logout.php">Sign out</a>
     </li>
   </ul>
 </nav>
@@ -88,43 +93,43 @@ include('../dbconfig.php');
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="product_modal_content">
-    
-      <form method="post" id="order_form" enctype="multipart/form-data">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="acc_username">Username</label>
-                  <div  id="acc_username" ></div>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="acc_email">Email:</label>
-                  <div id="acc_email"></div>
-                </div>
-              </div>  
-               <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label for="acc_name">Full Name</label>
-                  <div id="acc_name"></div>
-             
-                </div>
-              </div> 
+        <div class="modal-body" id="product_modal_content">
+      
+        <form method="post" id="order_form" enctype="multipart/form-data">
               <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label for="acc_add">Address</label>
-                  <div id="acc_add"></div>
+                  <div class="form-group col-md-6">
+                    <label for="acc_username">Username</label>
+                    <div  id="acc_username" ></div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="acc_email">Email:</label>
+                    <div id="acc_email"></div>
+                  </div>
+                </div>  
+                 <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="acc_name">Full Name</label>
+                    <div id="acc_name"></div>
+               
+                  </div>
+                </div> 
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="acc_add">Address</label>
+                    <div id="acc_add"></div>
+                  </div>
+                </div> 
+                <div id="load_order">
+                  
                 </div>
-              </div> 
-              <div id="load_order">
-                
-              </div>
-      </div>
-      <div class="modal-footer">
-        <input type="hidden" name="order_ID" id="order_ID" />
-        <input type="hidden" name="operation" id="operation" />
-        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_order">Submit</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-       </form>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" name="order_ID" id="order_ID" />
+          <input type="hidden" name="operation" id="operation" />
+          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_order">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </form>
     </div>
   </div>
 </div>
