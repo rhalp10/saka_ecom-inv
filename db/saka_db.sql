@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2019 at 10:29 PM
+-- Generation Time: May 13, 2019 at 11:08 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -172,8 +172,8 @@ INSERT INTO `products` (`prod_ID`, `ctgy_ID`, `prod_Img`, `prod_Name`, `prod_Des
 --
 
 CREATE TABLE `user` (
-  `user_ID` bigint(20) UNSIGNED NOT NULL,
-  `lvl_ID` tinyint(11) UNSIGNED DEFAULT NULL COMMENT 'user level',
+  `user_ID` int(11) UNSIGNED NOT NULL,
+  `lvl_ID` tinyint(4) UNSIGNED DEFAULT NULL COMMENT 'user level',
   `user_img` longblob,
   `user_Fullname` varchar(85) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_Name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -199,7 +199,7 @@ INSERT INTO `user` (`user_ID`, `lvl_ID`, `user_img`, `user_Fullname`, `user_Name
 --
 
 CREATE TABLE `user_level` (
-  `lvl_ID` int(11) UNSIGNED NOT NULL,
+  `lvl_ID` tinyint(4) UNSIGNED NOT NULL,
   `lvl_Name` varchar(85) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -233,13 +233,16 @@ ALTER TABLE `harvest`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`or_ID`),
-  ADD KEY `ors_ID` (`ors_ID`);
+  ADD KEY `ors_ID` (`ors_ID`),
+  ADD KEY `user_ID` (`user_ID`);
 
 --
 -- Indexes for table `order_item`
 --
 ALTER TABLE `order_item`
-  ADD PRIMARY KEY (`ord_ID`);
+  ADD PRIMARY KEY (`ord_ID`),
+  ADD KEY `prod_ID` (`prod_ID`),
+  ADD KEY `or_ID` (`or_ID`);
 
 --
 -- Indexes for table `order_status`
@@ -260,7 +263,8 @@ ALTER TABLE `products`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_ID`),
   ADD KEY `user_login_key` (`user_Name`),
-  ADD KEY `user_email` (`user_Email`);
+  ADD KEY `user_email` (`user_Email`),
+  ADD KEY `lvl_ID` (`lvl_ID`);
 
 --
 -- Indexes for table `user_level`
@@ -306,12 +310,12 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `user_level`
 --
 ALTER TABLE `user_level`
-  MODIFY `lvl_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `lvl_ID` tinyint(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
@@ -326,13 +330,27 @@ ALTER TABLE `harvest`
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`ors_ID`) REFERENCES `order_status` (`ors_ID`);
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`ors_ID`) REFERENCES `order_status` (`ors_ID`),
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`);
+
+--
+-- Constraints for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`prod_ID`) REFERENCES `products` (`prod_ID`),
+  ADD CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`or_ID`) REFERENCES `order` (`or_ID`);
 
 --
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`ctgy_ID`) REFERENCES `category` (`ctgy_ID`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`lvl_ID`) REFERENCES `user_level` (`lvl_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
