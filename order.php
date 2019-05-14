@@ -1,6 +1,10 @@
 <?php 
 include('dbconfig.php');
 session_start();
+
+if (!isset($_SESSION['login_user'])) {
+    header('Location:index.php');
+}
 ?>
 <!doctype html>
 <html lang="en">
