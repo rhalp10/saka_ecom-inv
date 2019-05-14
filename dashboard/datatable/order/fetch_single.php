@@ -24,6 +24,7 @@ if (isset($_POST['action'])) {
 			  $output["ac_Img"] = "../img/uploads/blank.png";
 			}
 		
+		$output["ors_ID"] = $row["ors_ID"];
 		$output["user_Fullname"] = $row["user_Fullname"];
 		$output["user_Name"] = $row["user_Name"];
 		$output["user_Email"] = $row["user_Email"];

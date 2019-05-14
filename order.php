@@ -83,7 +83,27 @@ session_start();
       </div>
    </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modal_cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" id="modal_header">
+        <h5 class="modal-title" id="ActionModalLabel">Shopping Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="cart_mbody">
+       
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="checkout">Check out</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php 
 include('x-footer.php');
@@ -94,6 +114,14 @@ include('x-script.php');
 ?>
 <script type="text/javascript" src="datatables/datatables.min.js"></script>
 <script type="text/javascript">
+   $(document).ready(function(){
+  refreshTable();
+});
+function refreshTable(){
+    $('#cart_mbody').load('load_shoppincart.php', function(){
+       setTimeout(refreshTable, 5000);
+    });
+}
 $(document).ready(function() {
              
             var dataTable = $('#order_data').DataTable({
@@ -144,6 +172,54 @@ $(document).ready(function() {
 
 
             });
+  $(document).on('click', '#checkout', function(){
+    or_ID = $('#or_ID').val();
+
+  if(confirm("Are you sure you want to checkout this items?"))
+    {
+      if ($('#or_ID').length) {
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"checkout",or_ID:or_ID},
+            dataType    :   'json',
+            complete     :   function(data) {
+              alert(data.responseJSON.msg);
+              if (data.responseJSON.success) {
+                    window.location.assign("order?or_ID="+or_ID);
+              }
+          
+            }
+        });
+      }
+      else{
+         alert('You must order first');
+      }
+      
+    
+    }
+    else
+    {
+      return false; 
+    }
+      
+  
+});
+    $(document).on('click', '.remove_item', function(){
+    
+     var data_id   = $(this).data('id');
+       
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"removeitemtoCart",data_id:data_id},
+            dataType    :   'json',
+            complete     :   function(data) {
+              alert(data.responseJSON.msg);
+            }
+        });
+ 
+    });
 });
 </script>
 </body>

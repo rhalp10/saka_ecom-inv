@@ -27,7 +27,7 @@ if (isset($_SESSION["login_user"])) {
 						<th>Price</th>
 						<th>Quantity(KG)</th>
 						<th>Subtotal</th>
-						 
+						<th class="text-center">Action</th>
 					</thead>
 					<tbody>
 					</tbody>
@@ -43,6 +43,7 @@ if (isset($_SESSION["login_user"])) {
 						<td><?php echo '&#x20b1; '.$row['ord_Price'];?></td>
 						<td><?php echo $row['ord_Weight'];?></td>
 						<td><?php echo '&#x20b1; '.number_format($Subtotal,2);?></td>
+						<td class="text-center remove_item"  data-id="<?php echo $row['ord_ID'];?>">x</td>
 					</tr>
 					<?php
 					$Total += $Subtotal ;

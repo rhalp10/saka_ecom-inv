@@ -105,6 +105,10 @@ function Header()
 			WHERE `ord`.`or_ID` =  '".$_REQUEST["order_ID"]."' 
 					LIMIT 1";
 	$result = mysqli_query($conn, $sql);
+	$user_Fullname  = "";
+	$or_Date   = "";
+	$user_Address  = "";
+	$or_ID   = "";
 	while ($row = mysqli_fetch_array($result)) 	
 		{
 
@@ -190,5 +194,12 @@ while ($row = mysqli_fetch_array($result)) {
 
 	$Total += $Subtotal ;
 	}
+
+     $pdf->Cell(120,10,'',1,0);
+  	 $pdf->Cell(35,10,'Total:',0,0);
+     $pdf->CellFitSpace(0,10,$Total,0,1);
+
+     $pdf->Cell(120,-10,'',0,0);
+  	 $pdf->Cell(0,-10,'',1,1);
 $pdf->Output();
 ?>

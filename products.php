@@ -154,15 +154,171 @@ session_start();
 
     <section class="jumbotron text-center">
 
-    <h1 style="background-color: #693; padding: 5px; color: white;">Open Field Demonstration Project</h1>
+    <h1 style="background-color: #693; padding: 5px; color: white;">Vegetables</h1>
   </section>
+  <div class="album py-5 bg-secondary">
+    <div class="container">
+        <?php 
+      $sql = "SELECT * FROM `products` WHERE ctgy_ID = 2";
+      $result = mysqli_query($conn, $sql);
+      $count_question = mysqli_num_rows($result) ;
+     
+      ?>
+      <div class="row">
+        <?php 
+         if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_array($result)) {
+        $prod_ID = $row['prod_ID'];
+      if (!empty($row['prod_Img'])) {
+        
+        $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
+      }
+      else{
+        $prod_Img = "img/uploads/blank.png";
+      }
+        $prod_Name = $row['prod_Name'];
+        $prod_Qnty = $row['prod_Weight'];
+        
+        if (isset($row['prod_ScientificName'])) {
+           $prod_scientific_name= 'Scientific Name: '.$row['prod_ScientificName'];
+        }
+        else{
+           $prod_scientific_name= '';
+        }
+       if (isset($row['prod_EnglishName'])) {
+          $prod_english_name= 'English Name: <i>'.$row['prod_EnglishName'].'</i>';
+        }
+        else{
+           $prod_english_name= '';
+        }
+        if (isset($row['prod_SeasonStart'])) {
+             $prod_Season = 'Season: '. month($row["prod_SeasonStart"]).' - '.month($row["prod_SeasonEnd"]);
+        }
+        else{
+           $prod_english_name= '';
+        }
+        if ($prod_Qnty > 0) {
+          $av = "<label  class='btn btn-success btn-sm float-right'>Available</label>";
+        }
+        else{
+           $av = "<label class='btn btn-danger btn-sm float-right'>Out of Stock</label>";
+        }
+         ?>
 
+          <div class="col-md-4">
+          <div class="card mb-4 shadow-sm" >
+            <img  class="bd-placeholder-img card-img-top" src="<?php echo $prod_Img?>" width="100%" height="100%" >
+            <div class="card-body" style="min-height: 200px;">
+              <p class="card-text" >
+              <strong><?php echo $prod_Name?><?php echo $av?></strong>
+              <br>
+              <?php echo $prod_scientific_name;?>
+              <br>
+              <?php echo $prod_english_name;?>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="addcart_prod">Add to Cart</button>
+                </div>
+                <small class="text-muted"><strong> <?php echo $prod_Season?></strong></small>
+              </div>
+            </div>
+          </div>
+        </div>
+   
+         <?php
+            }
+          }
+        ?>
+      
+      </div>
+    </div>
+  </div>
 
       <section class="jumbotron text-center">
 
     <h1 style="background-color: #693; padding: 5px; color: white;">Urban Agriculture Demonstration Project</h1>
   </section>
+  <div class="album py-5 bg-secondary">
+    <div class="container">
+        <?php 
+      $sql = "SELECT * FROM `products` WHERE ctgy_ID = 3";
+      $result = mysqli_query($conn, $sql);
+      $count_question = mysqli_num_rows($result) ;
+     
+      ?>
+      <div class="row">
+        <?php 
+         if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_array($result)) {
+        $prod_ID = $row['prod_ID'];
+      if (!empty($row['prod_Img'])) {
+        
+        $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
+      }
+      else{
+        $prod_Img = "img/uploads/blank.png";
+      }
+        $prod_Name = $row['prod_Name'];
+        $prod_Qnty = $row['prod_Weight'];
+        
+        if (isset($row['prod_ScientificName'])) {
+           $prod_scientific_name= 'Scientific Name: '.$row['prod_ScientificName'];
+        }
+        else{
+           $prod_scientific_name= '';
+        }
+       if (isset($row['prod_EnglishName'])) {
+          $prod_english_name= 'English Name: <i>'.$row['prod_EnglishName'].'</i>';
+        }
+        else{
+           $prod_english_name= '';
+        }
+        if (isset($row['prod_SeasonStart'])) {
+             $prod_Season = 'Season: '. month($row["prod_SeasonStart"]).' - '.month($row["prod_SeasonEnd"]);
+        }
+        else{
+           $prod_english_name= '';
+        }
+        if ($prod_Qnty > 0) {
+          $av = "<label  class='btn btn-success btn-sm float-right'>Available</label>";
+        }
+        else{
+           $av = "<label class='btn btn-danger btn-sm float-right'>Out of Stock</label>";
+        }
+         ?>
 
+          <div class="col-md-4">
+          <div class="card mb-4 shadow-sm" >
+            <img  class="bd-placeholder-img card-img-top" src="<?php echo $prod_Img?>" width="100%" height="100%" >
+            <div class="card-body" style="min-height: 200px;">
+              <p class="card-text" >
+              <strong><?php echo $prod_Name?><?php echo $av?></strong>
+              <br>
+              <?php echo $prod_scientific_name;?>
+              <br>
+              <?php echo $prod_english_name;?>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="view_prod">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#ActionModal"  data-id="<?php echo $prod_ID?>" id="addcart_prod">Add to Cart</button>
+                </div>
+                <small class="text-muted"><strong> <?php echo $prod_Season?></strong></small>
+              </div>
+            </div>
+          </div>
+        </div>
+   
+         <?php
+            }
+          }
+        ?>
+      
+      </div>
+    </div>
+  </div>
 
 
 </main>
@@ -425,7 +581,22 @@ var  new_item_qty = parseFloat(item_qty) + .1;
       return false; 
     }
     });
-  
+    $(document).on('click', '.remove_item', function(){
+    
+     var data_id   = $(this).data('id');
+       
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"removeitemtoCart",data_id:data_id},
+            dataType    :   'json',
+            complete     :   function(data) {
+              alert(data.responseJSON.msg);
+            }
+        });
+ 
+    });
+
 function productsAdd() {
   $("#cartTable tbody").append(
       "<tr>" +

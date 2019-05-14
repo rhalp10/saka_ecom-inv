@@ -35,14 +35,14 @@ $result = $statement->fetchAll();
     <li class="list-group-item active">Order #<?php echo $or_ID;?></li>
     <li class="list-group-item"><?php echo $ors_Name;?><br>
 		Placed on <?php echo $or_ID;?> <?php 
-    	if ($_SESSION['login_id'] != 2) {
+    	if ($_SESSION['login_level'] == 2) {
     		?>
-    		<a class="btn btn-sm btn-info proceed float-right" href=" dashboard/order_print?order_ID=1" target="_BLANK">PRINT</a>
+    		<a class="btn btn-sm btn-info proceed float-right" href="order_print?order_ID=<?php echo $or_ID;?>" target="_BLANK">PRINT</a>
     		<?php
     	}
     	else{
     		?>
-    		<a class="btn btn-sm btn-info proceed float-right" href="order_print?order_ID=1" target="_BLANK">PRINT</a>
+    		<a class="btn btn-sm btn-info proceed float-right" href="dashboard/order_print?order_ID=<?php echo $or_ID;?>" target="_BLANK">PRINT</a>
     		<?php
     	}
     	?></li>
@@ -70,6 +70,7 @@ $result = $statement->fetchAll();
 				<td><?php echo '&#x20b1; '.$row['ord_Price'];?></td>
 				<td><?php echo $row['ord_Weight'];?></td>
 				<td><?php echo '&#x20b1; '.number_format($Subtotal,2);?></td>
+			
 			</tr>
 			<?php
 			$Total += $Subtotal ;

@@ -232,6 +232,21 @@ function refreshTable(){
       
   
 });
+      $(document).on('click', '.remove_item', function(){
+    
+     var data_id   = $(this).data('id');
+       
+        $.ajax({
+            type        :   'POST',
+            url:"action-data.php",
+            data        :   {action:"removeitemtoCart",data_id:data_id},
+            dataType    :   'json',
+            complete     :   function(data) {
+              alert(data.responseJSON.msg);
+            }
+        });
+ 
+    });
             $(document).ready(function() {
               $('.owl-carousel').owlCarousel({
                 loop: true,

@@ -184,8 +184,7 @@ if ($_SESSION['login_level'] !=  2) {
                 success:function(data)
                 {
                   alert(data);
-                  $('#account_form')[0].reset();
-                  $('#account_modal').modal('hide');
+                  $('#order_modal').modal('hide');
                   dataTable.ajax.reload();
                 }
               });
@@ -212,13 +211,19 @@ if ($_SESSION['login_level'] !=  2) {
                   $('#acc_email').text(data.user_Email);
                   $('#acc_name').text(data.user_Fullname);
                   $('#acc_add').text(data.user_Address);
+                 
                   $( "#load_order" ).load( "datatable/order/fetchtable.php?order_ID="+order_ID);
 
                   $('#submit_input').show();
                   $('#account_ID').val(order_ID);
                   $('#submit_input').text('Process');
+                  if (data.ors_ID == 0) {
+                    $('#submit_input').text('Checkout');
+                  }
                   $('#submit_input').val('order_process');
                   $('#operation').val("order_process");
+                  $('#order_ID').val(order_ID);
+                  
                   
                 }
               });

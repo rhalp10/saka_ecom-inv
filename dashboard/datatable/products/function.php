@@ -36,6 +36,7 @@ function get_available_stocks($prod_ID){
       
    
    $available_stocks = $harvest_Weight - $or_Weight;
+   $available_stocks  = number_format($available_stocks ,2);
    $statement = $conn->prepare("UPDATE `products` SET `prod_Weight` = '$available_stocks' WHERE `products`.`prod_ID` = $prod_ID");
    $statement->execute();
 

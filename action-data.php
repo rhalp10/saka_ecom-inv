@@ -125,6 +125,20 @@ if (isset($_POST['action'])) {
 			echo json_encode($output);
 			
 		}
+
+		if ($_POST['action'] == "removeitemtoCart") {
+				$output = array();
+			$ord_ID = $_POST["data_id"];
+			$sql = "DELETE FROM `order_item` WHERE `order_item`.`ord_ID` = $ord_ID";
+			
+			if ( mysqli_query($conn, $sql)) {
+					$output['msg'] = "Successfuly Remove";
+			}
+			else{
+				$output['msg'] = "Error in Remove";
+			}
+			echo json_encode($output);
+		}
 		
 			
 	
