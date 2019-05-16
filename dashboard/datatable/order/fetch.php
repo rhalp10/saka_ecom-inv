@@ -49,6 +49,7 @@ foreach($result as $row)
   </button>
   <div class="dropdown-menu">
     <a class="dropdown-item view"  id="'.$row["or_ID"].'">View</a>
+    <a class="dropdown-item delete"  id="'.$row["or_ID"].'">Delete</a>
   </div>
 </div>';
 	$data[] = $sub_array;

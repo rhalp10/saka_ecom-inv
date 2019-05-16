@@ -134,6 +134,32 @@ if ($_SESSION['login_level'] !=  2) {
   </div>
 </div>
 
+
+
+
+<div class="modal fade" id="delorder_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="harvest_modal_title">Delete this Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+        <div class="btn-group">
+        <button type="submit" class="btn btn-danger" id="order_delform">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
     </main>
   </div>
@@ -230,6 +256,36 @@ if ($_SESSION['login_level'] !=  2) {
 
 
             });
+
+                   $(document).on('click', '.delete', function(){
+            var order_ID = $(this).attr("id");
+             $('#delorder_modal').modal('show');
+              $('.submit').hide();
+             
+             $('#order_ID').val(order_ID);
+            });
+
+           
+
+
+          $(document).on('click', '#order_delform', function(event){
+             var order_ID =  $('#order_ID').val();
+           
+            $.ajax({
+             type        :   'POST',
+             url:"datatable/order/insert.php",
+             data        :   {operation:"delete_order",order_ID:order_ID},
+             dataType    :   'json',
+             complete     :   function(data) {
+               $('#delorder_modal').modal('hide');
+               alert(data.responseText);
+               dataTable.ajax.reload();
+                
+             }
+            })
+           
+          });
+          
           
           } );
 
