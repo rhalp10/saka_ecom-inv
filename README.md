@@ -1,4 +1,5 @@
-
+[![IMAGE ALT TEXT HERE](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img1.png)
+[![IMAGE ALT TEXT HERE](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img8.png)
 
 # What's Included?
 
