@@ -23,13 +23,13 @@ if (isset($_SESSION['login_user'])) {
     
     <div class="text-center" style="padding:20%">
       <h2>SAKA</h2>
-      <img src="img/icon1.png" width="80%">
+      <img src="assets/img/icon1.png" width="80%">
     </div>
     </div>
     <div class="col" style=" background-color: #f0f0f0; border: 1px solid #1d8f1d; border-radius:0px 5px 5px 0px;" >
 
   <div class="text-center mb-4">
-    <img class="mb-4"  src="img/logo.png" width="72" height="72">
+    <img class="mb-4"  src="assets/img/logo.png" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal" id="f_text">Login</h1>
   </div>
 <div id="f_login">
@@ -114,6 +114,7 @@ if (isset($_SESSION['login_user'])) {
 include('x-script.php');
 ?>
 <script type="text/javascript">
+
    $('#f_register').hide();
    $(document).on('submit', '#login_form', function(event){
             event.preventDefault();
@@ -129,11 +130,11 @@ include('x-script.php');
                 {
                   var newdata = JSON.parse(data);
                   if (newdata.success) {
-                      alert(newdata.success);
+                      alertify.alert(newdata.success).setHeader('Login Success');
                      window.location.assign("dashboard/");
                   }
                   else{
-                    alert(newdata.error);
+                    alertify.alert(newdata.error).setHeader('Error Login');
                   }
                 }
               });
@@ -154,12 +155,14 @@ include('x-script.php');
                   var newdata = JSON.parse(data);
                   console.log(newdata);
                   if (newdata.success) {
-                      alert(newdata.success);
+                      alertify.alert(newdata.success).setHeader('Successfully Register');
                      $('#f_login').show();
                      $('#f_register').hide();
                   }
                   else{
-                    alert(newdata.error);
+
+                    alertify.alert(newdata.error).setHeader('Register Error ');
+                    
                   }
                 }
               });

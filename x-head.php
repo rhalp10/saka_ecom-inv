@@ -36,13 +36,13 @@ else{
     <meta name="generator" content="Jekyll v3.8.5">
     <title><?php echo $page_title;?></title>
 
-    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <link rel="icon" href="assets/img/logo.png" type="image/x-icon">
     <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
 
-    <?php if ($pagefile_name == "index" or  $pagefile_name == NULL  or (preg_match( '/^order.*/', $pagefile_name)) ): ?>
+    <?php if ($pagefile_name == "index" or  $pagefile_name == NULL  or (preg_match( '/^order.*/', $pagefile_name)) or (preg_match( '/^index.*/', $pagefile_name))): ?>
         <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -60,9 +60,9 @@ else{
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="css/carousel.css" rel="stylesheet">
+    <link href="assets/css/carousel.css" rel="stylesheet">
     <?php endif ?>
-  <?php if ($pagefile_name == "products"): ?>
+  <?php if ($pagefile_name == "products"  or (preg_match( '/^products.*/', $pagefile_name))) : ?>
    <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -80,9 +80,9 @@ else{
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="css/album.css" rel="stylesheet">
+    <link href="assets/css/album.css" rel="stylesheet">
     <?php endif ?>
-  <?php if ($pagefile_name == "authentication"): ?>
+  <?php if ($pagefile_name == "authentication"  or (preg_match( '/^authentication.*/', $pagefile_name))): ?>
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -100,6 +100,10 @@ else{
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="css/floating-labels.css" rel="stylesheet">
+    <link href="assets/css/floating-labels.css" rel="stylesheet">
   <?php endif ?>
+  <!-- include the style -->
+  <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css" />
+  <!-- include a theme -->
+  <link rel="stylesheet" href="assets/alertifyjs/css/themes/default.min.css" />
   </head>

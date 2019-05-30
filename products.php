@@ -90,7 +90,7 @@ session_start();
         $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
       }
       else{
-        $prod_Img = "img/uploads/blank.png";
+        $prod_Img = "assets/img/uploads/blank.png";
       }
         $prod_Name = $row['prod_Name'];
         $prod_Qnty = $row['prod_Weight'];
@@ -174,7 +174,7 @@ session_start();
         $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
       }
       else{
-        $prod_Img = "img/uploads/blank.png";
+        $prod_Img = "assets/img/uploads/blank.png";
       }
         $prod_Name = $row['prod_Name'];
         $prod_Qnty = $row['prod_Weight'];
@@ -258,7 +258,7 @@ session_start();
         $prod_Img = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
       }
       else{
-        $prod_Img = "img/uploads/blank.png";
+        $prod_Img = "assets/img/uploads/blank.png";
       }
         $prod_Name = $row['prod_Name'];
         $prod_Qnty = $row['prod_Weight'];
@@ -529,8 +529,9 @@ var  new_item_qty = parseFloat(item_qty) + .1;
   $(document).on('click', '#checkout', function(){
     or_ID = $('#or_ID').val();
 
-  if(confirm("Are you sure you want to checkout this items?"))
-    {
+
+    alertify.confirm("Are you sure you want to checkout this items?",
+    function(){
       if ($('#or_ID').length) {
         $.ajax({
             type        :   'POST',
@@ -538,48 +539,55 @@ var  new_item_qty = parseFloat(item_qty) + .1;
             data        :   {action:"checkout",or_ID:or_ID},
             dataType    :   'json',
             complete     :   function(data) {
-              alert(data.responseJSON.msg);
+              alertify.alert(data.responseJSON.msg).setHeader('Shopping Cart');
               if (data.responseJSON.success) {
                     window.location.assign("order?or_ID="+or_ID);
               }
-          
+              alertify.success('Ok');
             }
         });
       }
       else{
-         alert('You must order first');
+         alertify.alert('You must order first').setHeader('Shopping Cart');
+         alertify.error('Error');
       }
-      
-    
-    }
-    else
-    {
-      return false; 
-    }
+    },
+    function(){
+      alertify.error('Cancel');
+    }).setHeader('Check out');
       
   
 });
 
   $(document).on('click', '#addtoCart', function(){
-      if(confirm("Are you sure you want to cart this items?"))
-    {
+   
+    alertify.confirm("Are you sure you want to cart this items?",
+    function(){
+
       var prod_ID = $("#mprod_ID").val();
       var item_qty = $('#item_number').val();
-  
-        $.ajax({
-            type        :   'POST',
-            url:"action-data.php",
-            data        :   {action:"addtoCart",prod_ID:prod_ID,item_qty:item_qty},
-            dataType    :   'json',
-            complete     :   function(data) {
-              alert(data.responseJSON.msg);
+      $.ajax({
+          type        :   'POST',
+          url:"action-data.php",
+          data        :   {action:"addtoCart",prod_ID:prod_ID,item_qty:item_qty},
+          dataType    :   'json',
+          complete     :   function(data) {
+            if (data.responseJSON.success) {
+              alertify.alert(data.responseJSON.msg).setHeader('Shopping Cart');
+              alertify.success('Ok');
             }
-        });
-    }
-    else
-    {
-      return false; 
-    }
+            else{
+               alertify.alert(data.responseJSON.msg).setHeader('Shopping Cart');
+              alertify.error('Add to Cart Error');
+            }
+          }
+      });
+    },
+    function(){
+      alertify.error('Cancel');
+    }).setHeader('Add to Cart');
+
+
     });
     $(document).on('click', '.remove_item', function(){
     
@@ -591,22 +599,13 @@ var  new_item_qty = parseFloat(item_qty) + .1;
             data        :   {action:"removeitemtoCart",data_id:data_id},
             dataType    :   'json',
             complete     :   function(data) {
-              alert(data.responseJSON.msg);
+              alertify.alert(data.responseJSON.msg).setHeader('Shopping Cart');
             }
         });
  
     });
 
-function productsAdd() {
-  $("#cartTable tbody").append(
-      "<tr>" +
-        "<td>21</td>" +
-        "<td>My First Video</td>" +
-        "<td>6/11/2015</td>" +
-        "<td>www.pluralsight.com</td>" +
-      "</tr>"
-  );
-}
+
 
 
 

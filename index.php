@@ -13,8 +13,8 @@ session_start();
  include('x-header.php');
  ?>
 
-    <link rel="stylesheet" href="OwlCarousel/dist/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="OwlCarousel/dist/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="assets/OwlCarousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/OwlCarousel/dist/assets/owl.theme.default.min.css">
 <main role="main">
 
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -25,7 +25,7 @@ session_start();
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="img/bg1.png" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <img src="assets/img/bg1.png" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
         <div class="container">
           <div class="carousel-caption text-left">
             <h1>CvSU SAKA</h1>
@@ -35,7 +35,7 @@ session_start();
         </div>
       </div>
       <div class="carousel-item">
-          <img src="img/bg2.png" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <img src="assets/img/bg2.png" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
         <div class="container">
           <div class="carousel-caption">
              <h1>Farmer's Training Center  </h1>
@@ -45,7 +45,7 @@ session_start();
         </div>
       </div>
       <div class="carousel-item">
-          <img src="img/bg3.png" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <img src="assets/img/bg3.png" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
         <div class="container">
           <div class="carousel-caption text-right">
             <h1>Goods and Croops</h1>
@@ -82,24 +82,24 @@ session_start();
       </div>
       <div class="col-md-5">
       
-        <img src="img/q2.jpg"  class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500">
+        <img src="assets/img/q2.jpg"  class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500">
       </div>
     </div>
      <div class="owl-carousel owl-theme">
             <div class="item">
-             <img src="img/q1.jpg">
+             <img src="assets/img/q1.jpg">
             </div>
             <div class="item">
-               <img src="img/q2.jpg">
+               <img src="assets/img/q2.jpg">
             </div>
             <div class="item">
-              <img src="img/q3.jpg">
+              <img src="assets/img/q3.jpg">
             </div>
             <div class="item">
-             <img src="img/q4.jpg">
+             <img src="assets/img/q4.jpg">
             </div>
             <div class="item">
-              <img src="img/q5.jpg">
+              <img src="assets/img/q5.jpg">
             </div>
           </div>
     <hr class="featurette-divider">
@@ -111,7 +111,7 @@ session_start();
       </div>
       <div class="col-md-5 order-md-1">
         <div class="col-md-12">
-          <img src="img/cvsu.jpg"  class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500">
+          <img src="assets/img/cvsu.jpg"  class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500">
         </div>
         <div class="col-md-12">
           <h6 class="text-center">CAVITE STATE UNIVERSITY DON SEVERINO DELAS ALAS (MAIN) CAMPUS </h6>
@@ -188,7 +188,7 @@ include('x-script.php');
 ?>
 
 
-    <script src="OwlCarousel/dist/owl.carousel.js"></script>
+    <script src="assets/OwlCarousel/dist/owl.carousel.js"></script>
           <script>
  $(document).ready(function(){
   refreshTable();
@@ -202,8 +202,9 @@ function refreshTable(){
   $(document).on('click', '#checkout', function(){
     or_ID = $('#or_ID').val();
 
-  if(confirm("Are you sure you want to checkout this items?"))
-    {
+
+    alertify.confirm("Are you sure you want to checkout this items?",
+    function(){
       if ($('#or_ID').length) {
         $.ajax({
             type        :   'POST',
@@ -211,24 +212,21 @@ function refreshTable(){
             data        :   {action:"checkout",or_ID:or_ID},
             dataType    :   'json',
             complete     :   function(data) {
-              alert(data.responseJSON.msg);
+               alertify.alert(data.responseJSON.msg).setHeader('Checkout');
               if (data.responseJSON.success) {
                     window.location.assign("order?or_ID="+or_ID);
               }
-          
+              alertify.success('Ok');
             }
         });
       }
       else{
-         alert('You must order first');
+         alertify.alert('You must order first').setHeader('Checkout');
       }
-      
-    
-    }
-    else
-    {
-      return false; 
-    }
+    },
+    function(){
+      alertify.error('Cancel');
+    }).setHeader('Shopping Cart');
       
   
 });
@@ -242,7 +240,7 @@ function refreshTable(){
             data        :   {action:"removeitemtoCart",data_id:data_id},
             dataType    :   'json',
             complete     :   function(data) {
-              alert(data.responseJSON.msg);
+              alertify.alert(data.responseJSON.msg).setHeader('Cart');
             }
         });
  

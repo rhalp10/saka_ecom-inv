@@ -13,18 +13,16 @@ if ($_SESSION['login_level'] !=  2) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="developer" content="Rhalp Darren R. Cabrera">
     <meta name="generator" content="Jekyll v3.8.5">
-    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
     <title>Manage Goods and Crops</title>
 
 
-    <!-- Bootstrap core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="../datatables/datatables.min.css"/>
- 
-
-
-
+  <?php 
+  include('x-css.php');
+  ?>
+  
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -42,7 +40,7 @@ if ($_SESSION['login_level'] !=  2) {
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="../assets/css/dashboard.css" rel="stylesheet">
   </head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -100,7 +98,7 @@ if ($_SESSION['login_level'] !=  2) {
              <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="prod_img">
-                 <img src="../img/uploads/blank.png" class="rounded float-left" alt="..." id="prod_img_container" runat="server" style="max-height: 250px; max-width: 250px;  background-repeat:no-repeat;
+                 <img src="../assets/img/uploads/blank.png" class="rounded float-left" alt="..." id="prod_img_container" runat="server" style="max-height: 250px; max-width: 250px;  background-repeat:no-repeat;
   background-size:cover;height: auto;
 width:auto;">
               </label>
@@ -236,14 +234,9 @@ width:auto;">
   </div>
 </div>
 
-<script src="../js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../js/jquery-slim.min.js"><\/script>')</script>
-
-      <script src="../js/jquery-3.3.1.min.js" ></script>
-      <script src="../js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-        <script src="../js/feather.min.js"></script>
-        <script src="../js/dashboard.js"></script>
-        <script type="text/javascript" src="../datatables/datatables.min.js"></script>
+<?php 
+include('x-script.php');
+?>
         <script type="text/javascript">
             function readURL(input) {
         
@@ -302,7 +295,8 @@ width:auto;">
             {
               if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1)
               {
-                alert("Invalid Image File");
+                
+                alertify.alert("Invalid Image File").setHeader('Product Image');
                 $('#prod_img').val('');
                 return false;
               }
@@ -316,7 +310,7 @@ width:auto;">
                 processData:false,
                 success:function(data)
                 {
-                  alert(data);
+                  alertify.alert(data).setHeader('Product');
                   $('#product_form')[0].reset();
                   $('#product_modal').modal('hide');
                   dataTable.ajax.reload();
@@ -328,7 +322,7 @@ width:auto;">
           $(document).on('click', '.add', function(){
             $('#product_modal_title').text('Add New Product');
             $('#product_form')[0].reset();
-            $('#prod_img_container').attr('src', '../img/uploads/blank.png');
+            $('#prod_img_container').attr('src', '../assets/img/uploads/blank.png');
              $("#prod_img").show();
             $('#submit_input').show();
             $('#submit_input').text('Submit');
@@ -451,7 +445,7 @@ width:auto;">
              dataType    :   'json',
              complete     :   function(data) {
                $('#delproduct_modal').modal('hide');
-               alert(data.responseText);
+               alertify.alert(data.responseText).setHeader('Delete this Product');
                dataTable.ajax.reload();
                 
              }

@@ -13,15 +13,16 @@ if ($_SESSION['login_level'] !=  2) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="developer" content="Rhalp Darren R. Cabrera">
     <meta name="generator" content="Jekyll v3.8.5">
 
-    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
     <title>Manage Account</title>
 
 
-    <!-- Bootstrap core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="../datatables/datatables.min.css"/>
+  <?php 
+  include('x-css.php');
+  ?>
  
 
 
@@ -43,7 +44,7 @@ if ($_SESSION['login_level'] !=  2) {
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="../assets/css/dashboard.css" rel="stylesheet">
   </head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -163,7 +164,7 @@ if ($_SESSION['login_level'] !=  2) {
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="account_modal_title">Delete this Product</h5>
+        <h5 class="modal-title" id="account_modal_title">Delete this Account</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -187,14 +188,9 @@ if ($_SESSION['login_level'] !=  2) {
   </div>
 </div>
 
-<script src="../js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../js/jquery-slim.min.js"><\/script>')</script>
-
-      <script src="../js/jquery-3.3.1.min.js" ></script>
-      <script src="../js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-        <script src="../js/feather.min.js"></script>
-        <script src="../js/dashboard.js"></script>
-        <script type="text/javascript" src="../datatables/datatables.min.js"></script>
+<?php 
+include('x-script.php');
+?>
         <script type="text/javascript">
    
 
@@ -231,7 +227,7 @@ if ($_SESSION['login_level'] !=  2) {
                 processData:false,
                 success:function(data)
                 {
-                  alert(data);
+                  alertify.alert(data).setHeader('Account');
                   $('#account_form')[0].reset();
                   $('#account_modal').modal('hide');
                   dataTable.ajax.reload();
@@ -359,7 +355,7 @@ if ($_SESSION['login_level'] !=  2) {
              dataType    :   'json',
              complete     :   function(data) {
                $('#delaccount_modal').modal('hide');
-               alert(data.responseText);
+               alertify.alert(data.responseText).setHeader('Delete this Account');
                dataTable.ajax.reload();
                dataTable_product_data.ajax.reload();
                 

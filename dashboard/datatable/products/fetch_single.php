@@ -21,7 +21,7 @@ if (isset($_POST['action'])) {
 			 $output["prod_Img"] = 'data:image/jpeg;base64,'.base64_encode($row['prod_Img']);
 			}
 			else{
-			  $output["prod_Img"] = "../img/uploads/blank.png";
+			  $output["prod_Img"] = "../assets/img/uploads/blank.png";
 			}
 
 			$output["prod_Name"] = $row["prod_Name"];

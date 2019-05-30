@@ -15,7 +15,8 @@ if (isset($_POST['operation'])) {
 	if ($_POST['operation'] == "submit_login") {
 		if (empty($_POST['username']) || empty($_POST['password'])) 
 			{
-				echo "<script>alert('Username or Password is empty !');
+				echo "<script>
+				alertify.alert('Username or Password is empty !').setHeader('Error');
 										window.location='index.php';
 									</script>";
 

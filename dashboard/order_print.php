@@ -1,5 +1,5 @@
 <?php
-require('../print/fpdf.php');
+require('../assets/print/fpdf.php');
 include('../dbconfig.php');
 
 class PDF extends FPDF
@@ -121,7 +121,7 @@ function Header()
 				 $ac_Img = 'data:image/jpeg;base64,'.base64_encode($row['user_img']);
 				}
 				else{
-				  $ac_Img = "../img/uploads/blank.png";
+				  $ac_Img = "../assets/img/uploads/blank.png";
 				}
 			
 			$user_Fullname = $row["user_Fullname"];
@@ -131,7 +131,7 @@ function Header()
 		
 		}
     // Logo
-    $this->Image('../img/logo.png',30,6,20);
+    $this->Image('../assets/img/logo.png',30,6,20);
     // Arial bold 15
     $this->SetFont('Arial','B',15);
     // Move to the right

@@ -118,9 +118,11 @@ if (isset($_POST['action'])) {
 				$result = mysqli_query($conn, $sql);
 
 				$output['msg'] = "Success Added";
+				$output['success'] = "Success";
 			}
 			else{
 				$output['msg'] = "You Need to register First";
+				$output['error'] = "Error";
 			}
 			echo json_encode($output);
 			

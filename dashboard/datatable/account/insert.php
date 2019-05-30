@@ -71,7 +71,6 @@ if(isset($_POST["operation"]))
 		
 
 		$account_ID = $_POST["account_ID"];
-		$acc_username = $_POST["acc_username"];
 		$acc_name = $_POST["acc_name"];
 		$acc_lvl = $_POST["acc_lvl"];
 		$acc_email = $_POST["acc_email"];
@@ -119,7 +118,7 @@ if(isset($_POST["operation"]))
 		
 		if(!empty($result))
 		{
-			echo 'Data Deleted';
+			echo 'Successfully Deleted';
 		}
 		
 	

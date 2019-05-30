@@ -19,7 +19,7 @@ if (isset($_POST['action'])) {
 			 $output["ac_Img"] = 'data:image/jpeg;base64,'.base64_encode($row['user_img']);
 			}
 			else{
-			  $output["ac_Img"] = "../img/uploads/blank.png";
+			  $output["ac_Img"] = "../assets/img/uploads/blank.png";
 			}
 		
 		$output["lvl_ID"] = $row["lvl_ID"];
