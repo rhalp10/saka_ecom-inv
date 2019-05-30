@@ -1,5 +1,8 @@
+#Login
 [![IMAGE ALT TEXT HERE](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img1.png)
+#Dashboard
 [![IMAGE ALT TEXT HERE](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img8.png)
+[More Screenshots](https://github.com/rhalp10/saka_ecom-inv/tree/master/screenshots)
 
 # What's Included?
 
