@@ -1,9 +1,7 @@
 # Login
-![alt text][login]
-[login]: https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img1.png "Login"
+![login](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img1.png "Login")
 # Dashboard
-![alt text][dashboard]
-[dashboard]: https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img8.png "Dashboard"
+![dashboard](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img8.png "Dashboard")
 [More Screenshots](https://github.com/rhalp10/saka_ecom-inv/tree/master/screenshots)
 
 # What's Included?
