@@ -1,3 +1,35 @@
+Cavite State University - Sanayan sa Kakayahang Agrikultura (SAKA) E-Commerce System 
+=======================
+
+
+**CvSU-SAKA - CvSU-SAKA  is a cvsu e-commerce system that facilitate online transactions of goods and services through means of the transfer of information and funds over the Internet.** It was developed with [Bootstrap 4.x Framework](http://getbootstrap.com)
+
+
+
+Installation
+----------------
+You can choose one from multiple ways for installation.
+
+**GitHub**
+- Fork the repository ([here is the guide](https://help.github.com/articles/fork-a-repo/)).
+- Clone to your machine
+```
+git clone https://github.com/rhalp10/saka_ecom-inv.git
+```
+
+
+Browser Support
+----------
+- IE 10 +
+- Microsoft Edge (Latest)
+- Mozilla Firefox (Latest)
+- Google Chrome (Latest)
+- Opera (Latest)
+- Safari (Latest)
+
+Change Logs
+----------
+You can display all release notes with **[this link](https://github.com/rhalp10/saka_ecom-inv/commits/master)**
 # Login
 ![login](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img1.png "Login")
 # Dashboard
