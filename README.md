@@ -26,6 +26,7 @@ Browser Support
 - Google Chrome (Latest)
 - Opera (Latest)
 - Safari (Latest)
+- Brave (Latest)
 
 Change Logs
 ----------
