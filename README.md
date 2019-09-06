@@ -49,4 +49,4 @@ You can display all release notes with **[this link](https://github.com/rhalp10/
 
 # License
 
-The Cavite State University - Saka Inventory System is open source software [licensed as MIT](https://github.com/rhalp10/saka_ecom-inv/blob/master/README.md).
+The Cavite State University - Saka Inventory System is open source software [licensed as MIT](https://github.com/rhalp10/saka_ecom-inv/blob/master/LICENSE.md).
