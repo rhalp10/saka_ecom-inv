@@ -31,6 +31,13 @@ Browser Support
 Change Logs
 ----------
 You can display all release notes with **[this link](https://github.com/rhalp10/saka_ecom-inv/commits/master)**
+----------
+ 
+**Require PHP**
+- PHP 5.6.x to PHP 7.0
+- Login function used `mcrypt_encrypt()` This function has been DEPRECATED as of PHP 7.1.0 and REMOVED as of PHP 7.2.0. Relying on this function is highly discouraged.
+ 
+
 # Login
 ![login](https://github.com/rhalp10/saka_ecom-inv/blob/master/screenshots/img1.png "Login")
 # Dashboard
